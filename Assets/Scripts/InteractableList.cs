@@ -13,7 +13,7 @@ public class InteractableList  {
     public int currentIndex {get => _currentIndex;}
 
     // Retorna o objeto atualmente focado
-    public GameObject focusedGo {get { Debug.Log("Deu get " + _currentIndex); return interactableElements[_currentIndex];}}
+    public GameObject focusedGo {get => interactableElements[_currentIndex];}
 
     public InteractableList() {
         _currentIndex = 0;
