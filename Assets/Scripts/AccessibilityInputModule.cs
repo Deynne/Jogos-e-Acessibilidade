@@ -20,6 +20,24 @@ namespace UnityEngine.EventSystems {
         // Uma interação
         private const int minClicks = 2;
 
+        /* Aqui é criado um handler para leitura das descrições de audio
+           Isto é necessário por que eu não quero que o efeito do click seja executado
+           quando eu pressionar para ouvir o audio.
+
+           O modelo do handler foi feito com base no script ExecuteEvents.
+
+           Aqui é criado um apontador para a função de eventos que procura e executa
+           nos objetos, a função especificada por DescriptionEventHandler
+        */
+        public static readonly ExecuteEvents.EventFunction<DescriptionEventHandler> pointerDescriptionHandler = Execute;
+
+        // função de eventos que procura e executa nos objetos, a função especificada por
+        // DescriptionEventHandler
+        private static void Execute(DescriptionEventHandler handler, BaseEventData eventData)
+        {
+            handler.OnDescriptorPress(ExecuteEvents.ValidateEventData<PointerEventData>(eventData));
+        }
+
         // Verifica se o sistem deve ignorar inputs na perda de foco
         private bool ShouldIgnoreEventsOnNoFocus() {
             switch (SystemInfo.operatingSystemFamily) {
@@ -72,21 +90,27 @@ namespace UnityEngine.EventSystems {
                 // Verifica se o deslize foi para esquerda ou direita
                 // TODO Testar a necessidade de uma margem de erro para evitar deslizes indesejados
                 float diff = _LastMousePosition.x - _MousePosition.x;
-                
+                // Uma flag para indicar se o movimento foi de toque ou deslize
+                bool swipe = false;
                 // Se o valor for negativo é um deslize para esquerda, caso contrário para direita
                 // À esquerda o item anterior é selecionado, a direita o item posterior é selecionado
                 // O movimento é realizado de forma cíclica pela interface
                 if(diff < 0) {
                     listSingleton.interactableList.Next();
-
+                    swipe = true;
                 }
                 else if(diff > 0) {
                     listSingleton.interactableList.Previous();
+                    swipe = true;
                 }
                 // Se o minimo de clicks para interação foi realizado, permite a interação;
                 if(pointerEvent.clickCount >= minClicks) {
                     ExecuteEvents.Execute(pointerEvent.pointerPress, pointerEvent, ExecuteEvents.pointerClickHandler);
                     pointerEvent.clickCount = 0;
+                }
+                // Se o movimento foi de toque, executa a descrição de audio
+                else if(!swipe) {
+                    ExecuteEvents.ExecuteHierarchy(currentGo,pointerEvent,pointerDescriptionHandler);
                 }
             }
             // Trata eventos relacionado ao arrastar
@@ -272,15 +296,22 @@ namespace UnityEngine.EventSystems {
             if (pointerEvent.pointerPress == pointerUpHandler && pointerEvent.eligibleForClick)
             {
                 float diff = _LastMousePosition.x - _MousePosition.x;
+                bool swipe = false;
                 if(diff < 0) {
+                    swipe = true;
                     listSingleton.interactableList.Next();
                 }
                 else if(diff > 0) {
+                    swipe = true;
                     listSingleton.interactableList.Previous();
                 }
                 
-                if(pointerEvent.clickCount > 1)
+                if(pointerEvent.clickCount > minClicks) {
                     ExecuteEvents.Execute(pointerEvent.pointerPress, pointerEvent, ExecuteEvents.pointerClickHandler);
+                }
+                else if(!swipe) {
+                    ExecuteEvents.ExecuteHierarchy(currentGo,pointerEvent,pointerDescriptionHandler);
+                }
             }
             else if (pointerEvent.pointerDrag != null && pointerEvent.dragging)
             {

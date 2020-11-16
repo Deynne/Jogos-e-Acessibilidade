@@ -55,7 +55,6 @@ public class InteractableList  {
 
         foreach (GameObject go in interactableGoList) {
             interactableElements.Add(go);
-            Debug.Log(interactableElements.Count);
         }
 
     }
