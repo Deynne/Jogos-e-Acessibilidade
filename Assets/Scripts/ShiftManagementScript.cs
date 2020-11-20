@@ -18,7 +18,8 @@ public class ShiftManagementScript : MonoBehaviour
     public Transform playerBattleStation;
     public Transform enemyBattleStation;
 
-    public BattleState state;
+    //Variável colocada como static para acesso mais fácil por outros scripts
+    public static BattleState state;
 
     public Text UIText;
 
