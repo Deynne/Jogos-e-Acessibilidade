@@ -16,6 +16,7 @@ public class FightManager : MonoBehaviour
     [SerializeField] private ShiftManagementScript shiftManagementScript;
     [SerializeField] private Text playerHP;
     [SerializeField] private Text enemyHP;
+    [SerializeField] private Text lastMove;
     public Fighter playerFighter = new Fighter();
     public Fighter enemyFighter = new Fighter();
 
@@ -38,10 +39,11 @@ public class FightManager : MonoBehaviour
         //e é checado se a sequência atual é correta.
         if(tempMoves.Count < fightMoves.Count) {
             tempMoves.Add(newMove);
+             lastMove.text = newMove.ToString();
 
             //Caso a sequência não esteja correta, o personagem leva dano
             if(!RightSequence()) {
-                Debug.LogWarning("Dano!!!");
+                shiftManagementScript.UIText.text = "Dano recebido!";
                 TakeDamage();
             }
             return;
@@ -49,6 +51,7 @@ public class FightManager : MonoBehaviour
         
         //Se a sequência estiver correta, o golpe é adicionado à lista principal e a lista temporária é zerada
         fightMoves.Add(newMove);
+        lastMove.text = newMove.ToString();
         tempMoves = new List<Move>();
                 
         if(ShiftManagementScript.state == BattleState.ENEMYTURN) {

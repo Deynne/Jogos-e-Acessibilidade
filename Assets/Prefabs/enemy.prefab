@@ -94,5 +94,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56bf71410cabeff4fa345981fd6e877b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitChance: 80
+  hitChance: 95
+  decreaseChanceByMove: 0.5
   fightManagerScript: {fileID: 0}

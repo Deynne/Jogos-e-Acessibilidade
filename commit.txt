@@ -1,0 +1,3 @@
+Mudanças:
+    - IA inimiga atualizada com chance de erro aumentada a cada golpe;
+    - Textos para vida e golpe adicionados.
