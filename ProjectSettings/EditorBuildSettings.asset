@@ -4,7 +4,16 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Game/Scenes/Fake_Scene.unity
+    guid: 928cd97734bff7d41b3f845822205ebb
+  - enabled: 1
+    path: Assets/Game/Scenes/Ambiente.unity
+    guid: 9670a0b31cf76f66b8ee87758832f670
+  - enabled: 1
+    path: Assets/Game/Scenes/Jogo.unity
+    guid: f68fe7c401d3a724698b2514ed8c78da
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c7267d0adc92b1646ba0fba3c27cc2c0,
       type: 2}
