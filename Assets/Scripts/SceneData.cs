@@ -1,11 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-[System.Serializable]
-public class SceneData
-{
-    public string scenePath;
-    public int score;
-    public bool hasScore;
+[Serializable]
+public class SceneData {
+    [SerializeField]
+    private string _scenePath;
+    // [SerializeField] private int score;
+    // [SerializeField] private bool _hasScore;
+    [SerializeField]
+    private string _clipPath;
+    [SerializeField]
+    private string _sceneName;
+
+    // public int highestScore {get => score; set {_hasScore = true; score = value;}}
+    public string clipPath {get => _clipPath;}
+    public string scenePath {get => _scenePath;}
+    public string sceneName {get => _sceneName;}
+    // public bool hasScore {get => _hasScore;}
+
+    public SceneData(string scenePath, string name, string clipPath) {
+        _scenePath = scenePath;
+        // _hasScore = true;
+        // this.score = score;
+        _clipPath = clipPath;
+        _sceneName = name;
+    }
+
 }
+

@@ -53,6 +53,7 @@ public class InteractableList  {
     public void FindInteractables() {
         GameObject [] interactableGoList = GameObject.FindGameObjectsWithTag("Interactable");
 
+        // TODO verificar se é possível definir uma ordem para os objetos
         foreach (GameObject go in interactableGoList) {
             interactableElements.Add(go);
         }

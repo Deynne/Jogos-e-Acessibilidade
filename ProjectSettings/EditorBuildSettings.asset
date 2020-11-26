@@ -6,14 +6,30 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Game/Scenes/Fake_Scene.unity
-    guid: 928cd97734bff7d41b3f845822205ebb
-  - enabled: 1
     path: Assets/Game/Scenes/Ambiente.unity
     guid: 9670a0b31cf76f66b8ee87758832f670
   - enabled: 1
-    path: Assets/Game/Scenes/Jogo.unity
+    path: Assets/Game/Scenes/_Fake_Scene_1.unity
+    guid: bd8d828ce40aab708a206e7b55f1da7d
+  - enabled: 1
+    path: Assets/Game/Scenes/_Fake_Scene_2.unity
+    guid: 540bf53a6edfddbb7897431af70a1c3d
+  - enabled: 1
+    path: Assets/Game/Scenes/_Fake_Scene_3.unity
+    guid: 5f41d629b4d5a3df68b6b8dd2e63a4bf
+  - enabled: 1
+    path: Assets/Game/Scenes/_Jogo.unity
     guid: f68fe7c401d3a724698b2514ed8c78da
-  m_configObjects:
-    com.unity.input.settings: {fileID: 11400000, guid: c7267d0adc92b1646ba0fba3c27cc2c0,
-      type: 2}
+  - enabled: 1
+    path: Assets/Game/Scenes/Fake_Scene.unity
+    guid: 928cd97734bff7d41b3f845822205ebb
+  - enabled: 1
+    path: Assets/Game/Scenes/Fake_MultScene_Game/_Fake_Scene_1.unity
+    guid: 919f253675aac24baa88d1b01b34cd4b
+  - enabled: 1
+    path: Assets/Game/Scenes/Fake_MultScene_Game/Fake_Scene_2.unity
+    guid: d88159927b39b530b81f1cb7f34da6d6
+  - enabled: 1
+    path: Assets/Game/Scenes/Fake_MultScene_Game/Fake_Scene_3.unity
+    guid: aa32264d914fc5d7fbb2f515bb9f9aea
+  m_configObjects: {}
