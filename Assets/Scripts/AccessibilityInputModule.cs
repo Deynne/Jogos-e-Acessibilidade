@@ -1,6 +1,20 @@
 using System;
 using UnityEngine;
 
+// TODO: Corrigir erro
+/*
+ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <fb001e01371b4adca20013e0ac763896>:0)
+System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <fb001e01371b4adca20013e0ac763896>:0)
+System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <fb001e01371b4adca20013e0ac763896>:0)
+InteractableList.get_focusedGo () (at Assets/Scripts/InteractableList.cs:16)
+UnityEngine.EventSystems.AccessibilityInputModule.ProcessMousePress (UnityEngine.EventSystems.PointerInputModule+MouseButtonEventData data) (at Assets/Scripts/AccessibilityInputModule.cs:358)
+UnityEngine.EventSystems.AccessibilityInputModule.ProcessMouseEvent (System.Int32 id) (at Assets/Scripts/AccessibilityInputModule.cs:347)
+UnityEngine.EventSystems.AccessibilityInputModule.Process () (at Assets/Scripts/AccessibilityInputModule.cs:156)
+UnityEngine.EventSystems.EventSystem.Update () (at C:/Program Files/Unity/Hub/Editor/2019.4.9f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/EventSystem/EventSystem.cs:377)
+*/
+
 // Esta classe é uma cópia adaptada do StandaloneInputModule e é utilizada para
 // Adaptar a leitura de dados para o formato de acessibilidade
 namespace UnityEngine.EventSystems {
