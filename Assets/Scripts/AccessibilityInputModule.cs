@@ -114,11 +114,11 @@ namespace UnityEngine.EventSystems {
                 }
             }
             // Trata eventos relacionado ao arrastar
+            
             else if (pointerEvent.pointerDrag != null && pointerEvent.dragging)
             {
                 ExecuteEvents.ExecuteHierarchy(currentGo, pointerEvent, ExecuteEvents.dropHandler);
             }
-
             // Reseta variáveis do pointer
             pointerEvent.eligibleForClick = false;
             pointerEvent.pointerPress = null;
@@ -146,16 +146,29 @@ namespace UnityEngine.EventSystems {
             _InputPointerEvent = pointerEvent;
         }
 
+        protected bool SendUpdateEventToSelectedObject()
+        {
+            if (eventSystem.currentSelectedGameObject == null)
+                return false;
+
+            var data = GetBaseEventData();
+            ExecuteEvents.Execute(eventSystem.currentSelectedGameObject, data, ExecuteEvents.updateSelectedHandler);
+            return data.used;
+        }
+
         // Realiza o processamento das entradas
         public override void Process() {
             if (!eventSystem.isFocused && ShouldIgnoreEventsOnNoFocus())
                 return;
+            
+
+            // bool usedEvent = SendUpdateEventToSelectedObject();
 
             // Trata o touch primeiro devido a problemas de emulação de mouse
             if (!ProcessTouchEvents() && input.mousePresent)
                 ProcessMouseEvent(0);
             
-            // Deixei isso por não saber se pode vir a ser necessário futuramente.
+            // // Deixei isso por não saber se pode vir a ser necessário futuramente.
             // if (eventSystem.sendNavigationEvents)
             // {
             //     if (!usedEvent) 
@@ -187,7 +200,7 @@ namespace UnityEngine.EventSystems {
                 if (!released)
                 {
                     ProcessMove(pointer);
-                    ProcessDrag(pointer);
+                    this.ProcessDrag(pointer);
                 }
                 // Caso tenha sido solto, libera o pointer do toque.
                 else
@@ -200,7 +213,7 @@ namespace UnityEngine.EventSystems {
         // O objeto em currentOverGo é o objeto atualmente focado para interação
         protected void ProcessTouchPress(PointerEventData pointerEvent, bool pressed, bool released) {
             var currentOverGo = listSingleton.interactableList.focusedGo; //eventSystem.currentSelectedGameObject;//pointerEvent.pointerCurrentRaycast.gameObject;
-
+            if(!currentOverGo) return;
             // PointerDown notification
             if (pressed)
             {
@@ -356,7 +369,7 @@ namespace UnityEngine.EventSystems {
             var pointerEvent = data.buttonData;
             // O objeto selecionado é aquele que está focado, ja que a posição do mouse não importa.
             var currentOverGo = listSingleton.interactableList.focusedGo; //eventSystem.firstSelectedGameObject;//pointerEvent.pointerCurrentRaycast.gameObject;
-
+            if(!currentOverGo) return;
             // PointerDown notification
             if (data.PressedThisFrame())
             {
@@ -432,11 +445,13 @@ namespace UnityEngine.EventSystems {
         protected override void Start() {
             base.Start();
             listSingleton = ListSingleton.instance;
+            listSingleton.interactableList.ClearList();
             listSingleton.interactableList.FindInteractables();
         }
-        // protected override void ProcessDrag(PointerEventData pointerEvent) {
-        //     base.ProcessDrag(pointerEvent);
+        protected override void ProcessDrag(PointerEventData pointerEvent) {
+            if(Input.GetKey(KeyCode.Return) || input.touchCount > 1)
+                base.ProcessDrag(pointerEvent);
             
-        // }
+        }
     }
 }
