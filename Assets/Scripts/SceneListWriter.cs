@@ -40,7 +40,7 @@ public class SceneListWriter : MonoBehaviour
 
                 name = Regex.Match(path,regex).Value;
                 
-                sceneDataList.list.Add(new SceneData(path, name.Substring(1,name.Length-2), audioDescriptionFolder + name.Substring(1,name.Length-2)));
+                sceneDataList.list.Add(new SceneData(path, NameFilter(name), audioDescriptionFolder + name.Substring(1,name.Length-2)));
             }
         }
         return JsonUtility.ToJson(sceneDataList);
@@ -56,5 +56,10 @@ public class SceneListWriter : MonoBehaviour
         else {
             Debug.LogWarning("A pasta StreamingAssetsPath não existe e o arquivo com a lista de cenas não pôde ser criado.");
         }
+    }
+
+    private string NameFilter(string name) {
+        string s = name.Substring(2,name.Length-3);
+        return Regex.Replace(s, "(\\B[A-Z])", " $1");
     }
 }
