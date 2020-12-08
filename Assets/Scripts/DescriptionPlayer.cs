@@ -9,6 +9,9 @@ public class DescriptionPlayer : MonoBehaviour, DescriptionEventHandler
     private static AudioSource audioDescription;
     public AudioClip audioClip;
     private static AudioClip currentClip;
+    private static bool _playingTutorial;
+
+    public static bool playingTutorial {get => _playingTutorial;}
 
 
     private void OnEnable() {
@@ -31,6 +34,8 @@ public class DescriptionPlayer : MonoBehaviour, DescriptionEventHandler
     }
 
     public void OnDescriptorPress(PointerEventData pointerEventData) {
+        if(_playingTutorial)
+            return;
         if(audioDescription == null)
             throw new NullReferenceException("O componente de reprodução de audio não foi encontrado no objeto " + gameObject.transform.parent + ".");
         
@@ -53,7 +58,27 @@ public class DescriptionPlayer : MonoBehaviour, DescriptionEventHandler
     public void StopDescription() {
         if(audioDescription == null)
             throw new NullReferenceException("O componente de reprodução de audio não foi encontrado no objeto " + gameObject.transform.parent + ".");
-        audioDescription.Stop();
+        if(!_playingTutorial && audioDescription.isPlaying)
+            audioDescription.Stop();
+    }
+
+    public void PlayTutorial(AudioClip tutorial) {
+        if(!_playingTutorial && tutorial != null) {
+            audioDescription.clip = tutorial;
+            audioDescription.Play();
+            _playingTutorial = true;
+        }
+    }
+
+    void Update() {
+        if(_playingTutorial && !audioDescription.isPlaying) {
+            audioDescription.clip = audioClip;
+            _playingTutorial = false;
+        }
+    }
+
+    void Start() {
+        PlayTutorial(Resources.Load<AudioClip>("Sound/AudioDescription/Tutorials/Ambiente"));
     }
 
 }

@@ -16,6 +16,14 @@ public class SceneChanger : MonoBehaviour
         SceneManager.LoadScene("Jogo");
     }
 
+    // Carrega a scene do StreetFighter
+    public void LoadGame(string path)
+    {
+        if(path.Equals("") || path == null)
+            return;
+        SceneManager.LoadScene(path);
+    }
+
     // Carrega a scene do Tutorial
     public void LoadTutorial()
     {
@@ -27,5 +35,4 @@ public class SceneChanger : MonoBehaviour
     {
         SceneManager.LoadScene("Lobby");
     }
-
 }

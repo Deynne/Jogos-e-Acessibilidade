@@ -96,11 +96,11 @@ namespace UnityEngine.EventSystems {
                 // À esquerda o item anterior é selecionado, a direita o item posterior é selecionado
                 // O movimento é realizado de forma cíclica pela interface
                 if(diff < 0) {
-                    listSingleton.interactableList.Next();
+                    eventSystem.SetSelectedGameObject(listSingleton.interactableList.Next());
                     swipe = true;
                 }
                 else if(diff > 0) {
-                    listSingleton.interactableList.Previous();
+                    eventSystem.SetSelectedGameObject(listSingleton.interactableList.Previous());
                     swipe = true;
                 }
                 // Se o minimo de clicks para interação foi realizado, permite a interação;
@@ -158,7 +158,7 @@ namespace UnityEngine.EventSystems {
 
         // Realiza o processamento das entradas
         public override void Process() {
-            if (!eventSystem.isFocused && ShouldIgnoreEventsOnNoFocus())
+            if (!eventSystem.isFocused && ShouldIgnoreEventsOnNoFocus() || DescriptionPlayer.playingTutorial)
                 return;
             
 
@@ -312,11 +312,11 @@ namespace UnityEngine.EventSystems {
                 bool swipe = false;
                 if(diff < 0) {
                     swipe = true;
-                    listSingleton.interactableList.Next();
+                    eventSystem.SetSelectedGameObject(listSingleton.interactableList.Next());
                 }
                 else if(diff > 0) {
                     swipe = true;
-                    listSingleton.interactableList.Previous();
+                    eventSystem.SetSelectedGameObject(listSingleton.interactableList.Previous());
                 }
                 
                 if(pointerEvent.clickCount > minClicks) {
@@ -447,6 +447,7 @@ namespace UnityEngine.EventSystems {
             listSingleton = ListSingleton.instance;
             listSingleton.interactableList.ClearList();
             listSingleton.interactableList.FindInteractables();
+            eventSystem.SetSelectedGameObject(listSingleton.interactableList.focusedGo);
         }
         protected override void ProcessDrag(PointerEventData pointerEvent) {
             if(Input.GetKey(KeyCode.Return) || input.touchCount > 1)

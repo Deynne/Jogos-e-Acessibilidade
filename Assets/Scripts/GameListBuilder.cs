@@ -13,8 +13,8 @@ public class GameListBuilder : MonoBehaviour
     {
         sceneDataList = SceneListLoader.LoadSceneList();
 
-        for(int i = 0; i <sceneDataList.list.Count;i++)
-            CreateButtonList(sceneDataList.list[i],new Vector3(0,-10*(i+1),0));
+        for(int i = 0; i <sceneDataList.list.Count;i++) 
+            CreateButton(sceneDataList.list[i],new Vector3(0,-10*(i+1),0));
 
         ListSingleton ls = ListSingleton.instance;
         ls.interactableList.ClearList();
@@ -22,7 +22,7 @@ public class GameListBuilder : MonoBehaviour
         
     }
 
-    private Button CreateButtonList(SceneData sceneData, Vector3 position) {
+    private Button CreateButton(SceneData sceneData, Vector3 position) {
         // TODO Se necessário aumentar o tamanho de content
         Button b = sceneButtonFactory.make(position,parent.transform);
         
@@ -32,6 +32,11 @@ public class GameListBuilder : MonoBehaviour
         AudioClip ac = Resources.Load<AudioClip>(sceneData.clipPath);
         DescriptionPlayer d = b.GetComponent(typeof(DescriptionPlayer)) as DescriptionPlayer;
         d.SetVariables(ac);
+
+        b.onClick.AddListener(() => {
+                                        SceneChanger c = (SceneChanger) b.gameObject.AddComponent(typeof(SceneChanger));
+                                        c.LoadGame(sceneData.scenePath);
+                                    });
         
         return b;
         
