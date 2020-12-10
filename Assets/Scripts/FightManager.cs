@@ -23,6 +23,7 @@ public class FightManager : MonoBehaviour
     [SerializeField] private Text lastMove;
     //Os áudios desejados devem ser atribuídos no editor
     [SerializeField] private AudioClip[] punchSounds = new AudioClip[4];
+    [SerializeField] private AudioClip damageSound;
     private AudioSource audioSourceComponent;
     public Fighter playerFighter = new Fighter();
     public Fighter enemyFighter = new Fighter();
@@ -94,6 +95,9 @@ public class FightManager : MonoBehaviour
 
     //Esta função checa de quem é o turno e remove um de HP do lutador respectivo
     public void TakeDamage() {
+        //Audio de dano toca.
+        audioSourceComponent.PlayOneShot(damageSound);
+
         if(ShiftManagementScript.state == BattleState.PLAYERTURN) {
             playerFighter.hP--;
         } else if(ShiftManagementScript.state == BattleState.ENEMYTURN) {

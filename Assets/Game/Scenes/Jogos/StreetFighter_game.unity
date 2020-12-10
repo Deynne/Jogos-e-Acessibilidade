@@ -1049,6 +1049,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpInicial: 3
+  gamesToWin: 2
   fightMoves: 
   tempMoves: 
   shiftManagementScript: {fileID: 419783011}
@@ -1056,7 +1057,12 @@ MonoBehaviour:
   playerRounds: {fileID: 1798333138}
   enemyRounds: {fileID: 1492651448}
   enemyHP: {fileID: 419809014}
-  lastMove: {fileID: 0}
+  lastMove: {fileID: 2019695932}
+  punchSounds:
+  - {fileID: 8300000, guid: 207c2018a60e31a498869f5e41c1dac7, type: 3}
+  - {fileID: 8300000, guid: f64a92ef8403c6d4fb44ef7886df6505, type: 3}
+  - {fileID: 8300000, guid: b2556c8d80ccc984ebb61d5352bc33d1, type: 3}
+  - {fileID: 8300000, guid: 1818bd82c6a43954a9cadcd7e35ccb21, type: 3}
 --- !u!4 &1888468738
 Transform:
   m_ObjectHideFlags: 0
