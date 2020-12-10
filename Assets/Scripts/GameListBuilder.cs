@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GameListBuilder : MonoBehaviour
@@ -19,7 +20,9 @@ public class GameListBuilder : MonoBehaviour
         ListSingleton ls = ListSingleton.instance;
         ls.interactableList.ClearList();
         ls.interactableList.FindInteractables();
-        
+        EventSystem.current.SetSelectedGameObject(ls.interactableList.focusedGo);
+        DescriptionPlayer dp = ls.interactableList.focusedGo.GetComponent(typeof(DescriptionPlayer)) as DescriptionPlayer;
+        dp.OnDescriptorPress(null);
     }
 
     private Button CreateButton(SceneData sceneData, Vector3 position) {

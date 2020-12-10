@@ -361,7 +361,7 @@ PrefabInstance:
         type: 3}
       propertyPath: audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: a1d25ca07e7f6c0b984e484f47b51acd, type: 3}
+      objectReference: {fileID: 8300000, guid: c2e5a2f7ee0bcca83a0f934528689875, type: 3}
     - target: {fileID: 7849416207668436764, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -385,7 +385,7 @@ PrefabInstance:
     - target: {fileID: 7849416207668436765, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_Text
-      value: Jogar
+      value: Listar Jogos
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207700577146, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
@@ -731,7 +731,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1430341550}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1779720050}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 281ba639663a45042a04f9208b668e53, type: 3}
@@ -862,7 +862,7 @@ PrefabInstance:
         type: 3}
       propertyPath: audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: a1d25ca07e7f6c0b984e484f47b51acd, type: 3}
+      objectReference: {fileID: 8300000, guid: 12187990362f88fc9a14e0c2b71f2f82, type: 3}
     - target: {fileID: 7849416207668436764, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -922,7 +922,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 8300000, guid: 0c4a42af7ad4ecf0bb93501a9cf177db, type: 3}
+      objectReference: {fileID: 8300000, guid: 62c6ccd9b69b1c7c4b797cdffef565be, type: 3}
     - target: {fileID: 7849416207700577147, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
@@ -1052,6 +1052,25 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1430341550}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1779720050 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7849416207700577148, guid: 4ecac2332b7699d599331d4fe2672138,
+    type: 3}
+  m_PrefabInstance: {fileID: 1430341550}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1779720051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779720050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfb48f667d9ed3c07a90792e6072fc75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  descriptionPlayer: {fileID: 1265823695}
 --- !u!1 &1956271640
 GameObject:
   m_ObjectHideFlags: 0
@@ -1125,7 +1144,7 @@ PrefabInstance:
         type: 3}
       propertyPath: audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: a1d25ca07e7f6c0b984e484f47b51acd, type: 3}
+      objectReference: {fileID: 8300000, guid: 1696f7a700debd590bbacfe0b318a551, type: 3}
     - target: {fileID: 7849416207668436764, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_AnchoredPosition.y

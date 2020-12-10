@@ -16,7 +16,6 @@ public class DescriptionPlayer : MonoBehaviour, DescriptionEventHandler
 
     private void OnEnable() {
         SetVariables();
-
     }
 
     private void SetVariables() {
@@ -65,6 +64,8 @@ public class DescriptionPlayer : MonoBehaviour, DescriptionEventHandler
     public void PlayTutorial(AudioClip tutorial) {
         if(!_playingTutorial && tutorial != null) {
             audioDescription.clip = tutorial;
+            DescriptionPlayer dp = ListSingleton.instance.interactableList.focusedGo.GetComponent(typeof(DescriptionPlayer)) as DescriptionPlayer;
+            currentClip = dp.audioClip;
             audioDescription.Play();
             _playingTutorial = true;
         }
@@ -72,13 +73,10 @@ public class DescriptionPlayer : MonoBehaviour, DescriptionEventHandler
 
     void Update() {
         if(_playingTutorial && !audioDescription.isPlaying) {
-            audioDescription.clip = audioClip;
+            audioDescription.clip = currentClip;
             _playingTutorial = false;
+            audioDescription.Play();
         }
-    }
-
-    void Start() {
-        PlayTutorial(Resources.Load<AudioClip>("Sound/AudioDescription/Tutorials/Ambiente"));
     }
 
 }

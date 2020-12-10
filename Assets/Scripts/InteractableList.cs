@@ -18,8 +18,6 @@ public class InteractableList  {
                                             Debug.LogWarning("Não há elementos na lista de interativos. Você marcou os elementos interativos com a tag interactables?");
                                             return null;
                                         }
-                                        Debug.Log(_currentIndex);
-                                        Debug.Log(interactableElements[_currentIndex]);
                                         return interactableElements[_currentIndex];}
                                     }
 
