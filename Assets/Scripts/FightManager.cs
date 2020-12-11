@@ -21,8 +21,10 @@ public class FightManager : MonoBehaviour
     [SerializeField] private Text enemyRounds;
     [SerializeField] private Text enemyHP;
     [SerializeField] private Text lastMove;
+    [SerializeField] private Text inputText;
     //Os áudios desejados devem ser atribuídos no editor
     [SerializeField] private AudioClip[] punchSounds = new AudioClip[4];
+    public SceneChanger sceneChanger;
     private AudioSource audioSourceComponent;
     public Fighter playerFighter = new Fighter();
     public Fighter enemyFighter = new Fighter();
@@ -59,8 +61,14 @@ public class FightManager : MonoBehaviour
                 lastMove.text = "Dano recebido!";
                 TakeDamage();
             }
+            else if (tempMoves.Count == fightMoves.Count && ShiftManagementScript.state== BattleState.PLAYERTURN) {
+                inputText.text = "Faça um movimento novo!";
+            }
+
+
             return;
         }
+        
         
         //Se a sequência estiver correta, o golpe é adicionado à lista principal e a lista temporária é zerada
         fightMoves.Add(newMove);
@@ -107,13 +115,13 @@ public class FightManager : MonoBehaviour
 
         //Caso alguém chegue a 0 de vida, o jogo se encerra
         if(playerFighter.hP == 0 || enemyFighter.hP == 0) {
-            EndGame();
+            EndTurn();
         }
     }
 
     //No fim do jogo, o texto da UI é atualizado com a mensagem de vitória ou derrota
     //Além disso, o game do lutador respectivo é contabilizado e as vidas são reiniciadas
-    public void EndGame() {
+    private void EndTurn() {
         if(playerFighter.hP > 0) {
             playerFighter.games++;
             lastMove.text = "Round ganho";
@@ -122,15 +130,30 @@ public class FightManager : MonoBehaviour
             lastMove.text = "Round perdido";
         }
 
-        if(playerFighter.games == gamesToWin) {
-            lastMove.text = "Você ganhou a luta! :DDDD";
-        } else if(enemyFighter.games == gamesToWin) {
-            lastMove.text = "Você perdeu a luta! :(";
-        }
-
+        if(playerFighter.games == gamesToWin || enemyFighter.games == gamesToWin)
+            StartCoroutine(EndGame());
+        
         playerFighter.hP = hpInicial;
         enemyFighter.hP = hpInicial;
         UpdateUI();
+    }
+    IEnumerator EndGame() {
+        if(playerFighter.games == gamesToWin) {
+            lastMove.text = "Você ganhou a luta! :DDDD";
+            // yield return new WaitForSeconds(1);
+            // sceneChanger.LoadGame("_StreetFighter");
+        } else if(enemyFighter.games == gamesToWin) {
+            lastMove.text = "Você perdeu a luta! :(";
+            // yield return new WaitForSeconds(3);
+            // sceneChanger.LoadGame("_StreetFighter");
+
+        }
+        Debug.Log("Rodou antes");
+        yield return new WaitForSeconds(1);
+        Debug.Log("Rodou agora");
+        sceneChanger.LoadGame("_StreetFighter");
+
+        yield return null;
     }
 
     public void UpdateUI() {

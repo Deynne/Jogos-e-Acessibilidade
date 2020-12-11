@@ -95,13 +95,13 @@ namespace UnityEngine.EventSystems {
                 // Se o valor for negativo é um deslize para esquerda, caso contrário para direita
                 // À esquerda o item anterior é selecionado, a direita o item posterior é selecionado
                 // O movimento é realizado de forma cíclica pela interface
-                if(diff < 0) {
+                if(diff < 0 && !listSingleton.interactableList.isEmpty) {
                     currentGo = listSingleton.interactableList.Next();
                     eventSystem.SetSelectedGameObject(currentGo);
                     swipe = true;
                     ExecuteEvents.ExecuteHierarchy(currentGo,pointerEvent,pointerDescriptionHandler);
                 }
-                else if(diff > 0) {
+                else if(diff > 0 && !listSingleton.interactableList.isEmpty) {
                     currentGo = listSingleton.interactableList.Previous();
                     eventSystem.SetSelectedGameObject(currentGo);
                     swipe = true;
@@ -216,6 +216,7 @@ namespace UnityEngine.EventSystems {
         // Aqui é tratado as entradas e saídas do toque.
         // O objeto em currentOverGo é o objeto atualmente focado para interação
         protected void ProcessTouchPress(PointerEventData pointerEvent, bool pressed, bool released) {
+            if(listSingleton.interactableList.isEmpty) return;
             var currentOverGo = listSingleton.interactableList.focusedGo; //eventSystem.currentSelectedGameObject;//pointerEvent.pointerCurrentRaycast.gameObject;
             if(!currentOverGo) return;
             // PointerDown notification
@@ -314,12 +315,12 @@ namespace UnityEngine.EventSystems {
             {
                 float diff = _LastMousePosition.x - _MousePosition.x;
                 bool swipe = false;
-                if(diff < 0) {
+                if(diff < 0 && !listSingleton.interactableList.isEmpty) {
                     swipe = true;
                     eventSystem.SetSelectedGameObject(listSingleton.interactableList.Next());
                     ExecuteEvents.ExecuteHierarchy(currentGo,pointerEvent,pointerDescriptionHandler);
                 }
-                else if(diff > 0) {
+                else if(diff > 0 && !listSingleton.interactableList.isEmpty) {
                     swipe = true;
                     eventSystem.SetSelectedGameObject(listSingleton.interactableList.Previous());
                     ExecuteEvents.ExecuteHierarchy(currentGo,pointerEvent,pointerDescriptionHandler);
@@ -372,6 +373,7 @@ namespace UnityEngine.EventSystems {
 
         // Funciona semelhante ao ProcessTouchPress
         protected void ProcessMousePress(MouseButtonEventData data) {
+             if(listSingleton.interactableList.isEmpty) return;
             var pointerEvent = data.buttonData;
             // O objeto selecionado é aquele que está focado, ja que a posição do mouse não importa.
             var currentOverGo = listSingleton.interactableList.focusedGo; //eventSystem.firstSelectedGameObject;//pointerEvent.pointerCurrentRaycast.gameObject;
@@ -453,9 +455,11 @@ namespace UnityEngine.EventSystems {
             listSingleton = ListSingleton.instance;
             listSingleton.interactableList.ClearList();
             listSingleton.interactableList.FindInteractables();
-            eventSystem.SetSelectedGameObject(listSingleton.interactableList.focusedGo);
-            DescriptionPlayer dp = listSingleton.interactableList.focusedGo.GetComponent(typeof(DescriptionPlayer)) as DescriptionPlayer;
-            dp.OnDescriptorPress(null);
+            if(!listSingleton.interactableList.isEmpty) {
+                eventSystem.SetSelectedGameObject(listSingleton.interactableList.focusedGo);
+                DescriptionPlayer dp = listSingleton.interactableList.focusedGo.GetComponent(typeof(DescriptionPlayer)) as DescriptionPlayer;
+                dp.OnDescriptorPress(null);
+            }
         }
         protected override void ProcessDrag(PointerEventData pointerEvent) {
             if(Input.GetKey(KeyCode.Return) || input.touchCount > 1)

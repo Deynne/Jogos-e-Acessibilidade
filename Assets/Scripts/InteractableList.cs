@@ -21,6 +21,8 @@ public class InteractableList  {
                                         return interactableElements[_currentIndex];}
                                     }
 
+    public bool isEmpty {get => interactableElements.Count == 0?true:false;}
+
     public InteractableList() {
         _currentIndex = 0;
         interactableElements = new List<GameObject>();

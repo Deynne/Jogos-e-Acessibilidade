@@ -9,7 +9,10 @@ public class AmbienteTutorial : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        descriptionPlayer.PlayTutorial(Resources.Load<AudioClip>("Sound/AudioDescription/Tutorials/Ambiente"));
+        if(PlayerPrefs.GetInt("playedAmbienteTutorial",0) < 1) {
+            descriptionPlayer.PlayTutorial(Resources.Load<AudioClip>("Sound/AudioDescription/Tutorials/Ambiente"));
+            PlayerPrefs.SetInt("playedAmbienteTutorial",1);
+        }
     }
 
     // Update is called once per frame

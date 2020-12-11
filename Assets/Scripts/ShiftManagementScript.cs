@@ -37,8 +37,10 @@ public class ShiftManagementScript : MonoBehaviour
     IEnumerator SetUpBattle()
     {
         //Método que instancia player e inimigo no inicio da batalha
-        GameObject playerGO = Instantiate(playerPrefab, playerBattleStation);        
-        GameObject enemyGO = Instantiate(enemyPrefab, enemyBattleStation);        
+        GameObject playerGO = Instantiate(playerPrefab, playerBattleStation);
+        playerGO.transform.localPosition = new Vector3(0,5,1);        
+        GameObject enemyGO = Instantiate(enemyPrefab, enemyBattleStation);
+        enemyGO.transform.localPosition = new Vector3(0,5,1);        
 
         yield return new WaitForSeconds(2f);
 

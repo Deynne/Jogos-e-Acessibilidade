@@ -57,12 +57,10 @@ public class FighterAI : MonoBehaviour
 
             //Caso ele seja menor ou igual à chance de acerto, o lutador acertará o golpe
             if(prob <= hitChance) {
-                Debug.LogWarning("Acertará");
 
                 //E a variável "toPerform" recebe o próximo golpe corretamente
                 toPerform = nextValid;
             } else {
-                Debug.LogWarning("Errará");
                 
                 //Caso contrário, o golpe será errado e "toPerform" recebe outro golpe aleatório
                 while(toPerform == nextValid) {

@@ -10,47 +10,47 @@ PrefabInstance:
     - target: {fileID: 7849416207668436764, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.0000040531
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207668436764, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 146.80185
+      value: -97.109436
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207668436764, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 20.585804
+      value: -50.268417
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207668436764, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207668436764, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207668436764, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000002861023
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207668436764, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207668436764, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207668436765, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_Text
-      value: Street Fighter
+      value: Game Name
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207700577146, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
@@ -90,12 +90,12 @@ PrefabInstance:
     - target: {fileID: 7849416207700577147, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
-      value: 15
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207700577148, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_Name
-      value: GameLoadingButton Variant
+      value: GameListButton
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207700577149, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
@@ -160,17 +160,17 @@ PrefabInstance:
     - target: {fileID: 7849416207700577149, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -59.3
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207700577149, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 475
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207700577149, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 30
+      value: 122
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207700577149, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}

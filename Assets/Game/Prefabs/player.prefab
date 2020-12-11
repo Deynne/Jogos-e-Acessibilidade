@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8314399430975059660}
   - component: {fileID: 6826453864801600943}
   - component: {fileID: 6238015874208083154}
-  - component: {fileID: 807513021388315093}
   - component: {fileID: 6469337853042942527}
   m_Layer: 0
   m_Name: player
@@ -97,22 +96,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 20, y: 20, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &807513021388315093
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191959894897198020}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0.96
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 2
 --- !u!114 &6469337853042942527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,3 +109,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swipeOffset: 100
+  fightManagerScript: {fileID: 0}

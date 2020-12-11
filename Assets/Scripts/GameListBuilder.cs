@@ -20,6 +20,7 @@ public class GameListBuilder : MonoBehaviour
         ListSingleton ls = ListSingleton.instance;
         ls.interactableList.ClearList();
         ls.interactableList.FindInteractables();
+        ls.interactableList.Next();
         EventSystem.current.SetSelectedGameObject(ls.interactableList.focusedGo);
         DescriptionPlayer dp = ls.interactableList.focusedGo.GetComponent(typeof(DescriptionPlayer)) as DescriptionPlayer;
         dp.OnDescriptorPress(null);
@@ -27,8 +28,8 @@ public class GameListBuilder : MonoBehaviour
 
     private Button CreateButton(SceneData sceneData, Vector3 position) {
         // TODO Se necessário aumentar o tamanho de content
-        Button b = sceneButtonFactory.make(position,parent.transform);
-        
+        Button b = sceneButtonFactory.make(Vector3.zero,parent.transform);
+        b.transform.localPosition = position;
         Text t = b.GetComponentInChildren(typeof(Text)) as Text;
         t.text = sceneData.sceneName;
         
