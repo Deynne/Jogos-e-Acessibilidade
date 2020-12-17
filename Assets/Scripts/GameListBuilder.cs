@@ -17,13 +17,13 @@ public class GameListBuilder : MonoBehaviour
         for(int i = 0; i <sceneDataList.list.Count;i++) 
             CreateButton(sceneDataList.list[i],new Vector3(0,-10*(i+1),0));
 
-        ListSingleton ls = ListSingleton.instance;
-        ls.interactableList.ClearList();
-        ls.interactableList.FindInteractables();
-        ls.interactableList.Next();
-        EventSystem.current.SetSelectedGameObject(ls.interactableList.focusedGo);
-        DescriptionPlayer dp = ls.interactableList.focusedGo.GetComponent(typeof(DescriptionPlayer)) as DescriptionPlayer;
-        dp.OnDescriptorPress(null);
+        // ListSingleton ls = ListSingleton.instance;
+        // ls.interactableList.ClearList();
+        // ls.interactableList.FindInteractables();
+        // ls.interactableList.Next();
+        // EventSystem.current.SetSelectedGameObject(ls.interactableList.focusedGo);
+        // DescriptionPlayer dp = ls.interactableList.focusedGo.GetComponent(typeof(DescriptionPlayer)) as DescriptionPlayer;
+        // dp.OnDescriptorPress(null);
     }
 
     private Button CreateButton(SceneData sceneData, Vector3 position) {

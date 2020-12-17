@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class FileHandler : MonoBehaviour
 {
-    public static void SaveFile(string name) {}
+    //public static void SaveFile(string name) {}
 }

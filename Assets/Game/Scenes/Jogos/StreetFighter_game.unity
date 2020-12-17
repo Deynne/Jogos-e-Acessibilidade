@@ -469,15 +469,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9e8ed9b53e85a241a6e0aadad967b16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 1191959894897198020, guid: 5d52642fa25b1a240a9280494ef0ce8f,
-    type: 3}
-  enemyPrefab: {fileID: 1959601330914846834, guid: 3bf6ee371ca98fc40812481189ed8e7e,
-    type: 3}
-  playerButton: {fileID: 2101296669}
-  enemyButton: {fileID: 1631579575}
-  playerBattleStation: {fileID: 2064107325}
-  enemyBattleStation: {fileID: 1255069745}
-  UIText: {fileID: 272643591}
 --- !u!4 &419783012
 Transform:
   m_ObjectHideFlags: 0
@@ -596,7 +587,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1048328453}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a842f52e3707d6f4e8d98f6b90e826f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 6078c77db0b0fdba5ba0b4dbe1b94ec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1048328455
@@ -1088,26 +1079,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 1888468736}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9d894bb486e2314fabb0be9cd2f7983, type: 3}
+  m_Script: {fileID: 11500000, guid: fd49e29fba1125ce39e02f68af8697a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hpInicial: 3
   gamesToWin: 2
   fightMoves: 
   tempMoves: 
-  shiftManagementScript: {fileID: 419783011}
-  playerHP: {fileID: 1092647388}
-  playerRounds: {fileID: 1798333138}
-  enemyRounds: {fileID: 1492651448}
-  enemyHP: {fileID: 419809014}
-  lastMove: {fileID: 2019695932}
-  inputText: {fileID: 272643591}
+  shiftManagementScript: {fileID: 0}
+  playerHP: {fileID: 0}
+  playerRounds: {fileID: 0}
+  enemyRounds: {fileID: 0}
+  enemyHP: {fileID: 0}
+  lastMove: {fileID: 0}
+  inputText: {fileID: 0}
   punchSounds:
-  - {fileID: 8300000, guid: f64a92ef8403c6d4fb44ef7886df6505, type: 3}
-  - {fileID: 8300000, guid: 1818bd82c6a43954a9cadcd7e35ccb21, type: 3}
-  - {fileID: 8300000, guid: b2556c8d80ccc984ebb61d5352bc33d1, type: 3}
-  - {fileID: 8300000, guid: 207c2018a60e31a498869f5e41c1dac7, type: 3}
-  sceneChanger: {fileID: 1048328454}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  sceneChanger: {fileID: 0}
+  damageSound: {fileID: 0}
+  victoryDescription: {fileID: 0}
+  defeatDescription: {fileID: 0}
 --- !u!4 &1888468738
 Transform:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7849416207668436764}
   - component: {fileID: 7849416207668436762}
   - component: {fileID: 7849416207668436765}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 7849416207700577147}
   - component: {fileID: 7849416207700577146}
   - component: {fileID: 2761711767240967074}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Button
   m_TagString: Interactable
   m_Icon: {fileID: 0}
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7849416207700577148}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 281ba639663a45042a04f9208b668e53, type: 3}
+  m_Script: {fileID: 11500000, guid: 22bea18aef12909dfbe4a1e4c8d32979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   audioClip: {fileID: 0}
