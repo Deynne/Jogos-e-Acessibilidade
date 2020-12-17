@@ -466,9 +466,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 419783010}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9e8ed9b53e85a241a6e0aadad967b16, type: 3}
+  m_Script: {fileID: 11500000, guid: 33d639f199ab74c468d0eb9a40f4a81a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 1191959894897198020, guid: 5d52642fa25b1a240a9280494ef0ce8f,
+    type: 3}
+  enemyPrefab: {fileID: 1959601330914846834, guid: 3bf6ee371ca98fc40812481189ed8e7e,
+    type: 3}
+  playerButton: {fileID: 2101296669}
+  enemyButton: {fileID: 1631579575}
+  playerBattleStation: {fileID: 2064107325}
+  enemyBattleStation: {fileID: 1255069745}
+  UIText: {fileID: 272643591}
 --- !u!4 &419783012
 Transform:
   m_ObjectHideFlags: 0
@@ -1086,22 +1095,22 @@ MonoBehaviour:
   gamesToWin: 2
   fightMoves: 
   tempMoves: 
-  shiftManagementScript: {fileID: 0}
-  playerHP: {fileID: 0}
-  playerRounds: {fileID: 0}
-  enemyRounds: {fileID: 0}
-  enemyHP: {fileID: 0}
-  lastMove: {fileID: 0}
-  inputText: {fileID: 0}
+  shiftManagementScript: {fileID: 419783011}
+  playerHP: {fileID: 1092647388}
+  playerRounds: {fileID: 1798333138}
+  enemyRounds: {fileID: 1492651448}
+  enemyHP: {fileID: 419809014}
+  lastMove: {fileID: 2019695932}
+  inputText: {fileID: 272643591}
   punchSounds:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  sceneChanger: {fileID: 0}
-  damageSound: {fileID: 0}
-  victoryDescription: {fileID: 0}
-  defeatDescription: {fileID: 0}
+  - {fileID: 8300000, guid: 1818bd82c6a43954a9cadcd7e35ccb21, type: 3}
+  - {fileID: 8300000, guid: b2556c8d80ccc984ebb61d5352bc33d1, type: 3}
+  - {fileID: 8300000, guid: 207c2018a60e31a498869f5e41c1dac7, type: 3}
+  - {fileID: 8300000, guid: f64a92ef8403c6d4fb44ef7886df6505, type: 3}
+  sceneChanger: {fileID: 1048328454}
+  damageSound: {fileID: 8300000, guid: 9c7dbb76faf1fdb14bbc7e5128182bab, type: 3}
+  victoryDescription: {fileID: 8300000, guid: dc3e9dd9ff10a4516bf011b460657d4f, type: 3}
+  defeatDescription: {fileID: 8300000, guid: ad40246a41ca243e5b769e0288260ce6, type: 3}
 --- !u!4 &1888468738
 Transform:
   m_ObjectHideFlags: 0
