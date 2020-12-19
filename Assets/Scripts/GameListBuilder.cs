@@ -7,23 +7,31 @@ using UnityEngine.UI;
 public class GameListBuilder : MonoBehaviour
 {
     private SceneDataList sceneDataList;
-    public SceneButtonFactory sceneButtonFactory;
-    public GameObject parent;
+    [SerializeField]
+    private SceneButtonFactory sceneButtonFactory;
+    
+    [SerializeField]
+    private Map map;
+    [SerializeField]
+    private GameObject parent;
     // Start is called before the first frame update
     void Start()
     {
         sceneDataList = SceneListLoader.LoadSceneList();
-
+        GameObject temp = map.interactables[0];
+        map.interactables.RemoveAt(0);
         for(int i = 0; i <sceneDataList.list.Count;i++) 
-            CreateButton(sceneDataList.list[i],new Vector3(0,-10*(i+1),0));
+            map.interactables.Add(CreateButton(sceneDataList.list[i],new Vector3(0,-10*(i+1),0)).gameObject);
+        map.interactables.Add(temp);
 
-        // ListSingleton ls = ListSingleton.instance;
-        // ls.interactableList.ClearList();
-        // ls.interactableList.FindInteractables();
-        // ls.interactableList.Next();
-        // EventSystem.current.SetSelectedGameObject(ls.interactableList.focusedGo);
-        // DescriptionPlayer dp = ls.interactableList.focusedGo.GetComponent(typeof(DescriptionPlayer)) as DescriptionPlayer;
-        // dp.OnDescriptorPress(null);
+        InteractableList interactableList = ListSingleton.instance;
+        interactableList.UpdateMap(map);
+        // interactableList.ClearList();
+        // interactableList.FindInteractables();
+        // interactableList.Next();
+        EventSystem.current.SetSelectedGameObject(interactableList.focusedGo);
+        DescriptionPlayer dp = interactableList.focusedGo.GetComponent(typeof(DescriptionPlayer)) as DescriptionPlayer;
+        dp.OnDescriptorPress(null);
     }
 
     private Button CreateButton(SceneData sceneData, Vector3 position) {

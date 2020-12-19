@@ -105,7 +105,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1191959894897198020}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03a8a4f80ff430840b210a681559c7d7, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f454f526a1b6145f925b9d078eca9ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   swipeOffset: 100

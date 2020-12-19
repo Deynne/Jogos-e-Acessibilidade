@@ -199,6 +199,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 283992315}
   m_CullTransparentMesh: 0
+--- !u!1 &284818377 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7849416207700577148, guid: 4ecac2332b7699d599331d4fe2672138,
+    type: 3}
+  m_PrefabInstance: {fileID: 544477225}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &367467197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 367467198}
+  - component: {fileID: 367467199}
+  m_Layer: 0
+  m_Name: Map
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &367467198
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367467197}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1756527396}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &367467199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367467197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f9b7c8c3fec3c62caf387943a07871f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactables:
+  - {fileID: 1286468766}
+  - {fileID: 284818377}
 --- !u!1 &388718547
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,7 +843,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7933136d2d143d594897e7eedd9ecc6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneChanger: {fileID: 1437559715}
 --- !u!1 &1317025287
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,6 +980,7 @@ RectTransform:
   - {fileID: 283992316}
   - {fileID: 1286468765}
   - {fileID: 544477226}
+  - {fileID: 367467198}
   m_Father: {fileID: 2002585044}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
