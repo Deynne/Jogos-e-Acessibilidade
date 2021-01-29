@@ -6,7 +6,7 @@ public class InteractableList  : MonoBehaviour {
 
     // Lista que armazena referência para todos os elementos interativos da interface.
     [SerializeField]
-    private Map map;
+    private Map _map;
 
     // Indice do item atualmente em foco. A ideia é que não seja permitida uma alteração direta do valor do índice.
     private int _currentIndex;
@@ -15,14 +15,14 @@ public class InteractableList  : MonoBehaviour {
 
     // Retorna o objeto atualmente focado
     public GameObject focusedGo {get {
-                                        if(map.interactables.Count == 0){
+                                        if(_map.interactables.Count == 0){
                                             Debug.LogWarning("Não há elementos na lista de interativos. Você marcou os elementos interativos com a tag interactables?");
                                             return null;
                                         }
-                                        return map.interactables[_currentIndex];}
+                                        return _map.interactables[_currentIndex];}
                                     }
 
-    public bool isEmpty {get => map == null || map.interactables.Count == 0?true:false;}
+    public bool isEmpty {get => _map == null || _map.interactables.Count == 0?true:false;}
 
     public InteractableList() {
         _currentIndex = 0;
@@ -32,41 +32,45 @@ public class InteractableList  : MonoBehaviour {
 
     // Movimenta-se para o próximo elemento da lista. Caso se encontre no ultimo elemento, volta para o primeiro
     public GameObject Next() {
-        if(map.interactables.Count == 0){
+        if(_map.interactables.Count == 0){
             Debug.LogWarning("Não há elementos na lista de interativos. Você marcou os elementos interativos com a tag interactables?");
             return null;
         }
-        _currentIndex = ++_currentIndex % map.interactables.Count;
+        _currentIndex = ++_currentIndex % _map.interactables.Count;
 
-        return map.interactables[_currentIndex];
+        return _map.interactables[_currentIndex];
     }
 
     // Movimenta-se para o elemento na lista. Caso se encontre no primeiro elemento, move-se para o ultimo
     public GameObject Previous() {
-        if(map.interactables.Count == 0){
+        if(_map.interactables.Count == 0){
             Debug.LogWarning("Não há elementos na lista de interativos. Você marcou os elementos interativos com a tag interactables?");
             return null;
         }
-        _currentIndex = --_currentIndex < 0?map.interactables.Count-1:_currentIndex;
+        _currentIndex = --_currentIndex < 0?_map.interactables.Count-1:_currentIndex;
 
-        return map.interactables[_currentIndex];
+        return _map.interactables[_currentIndex];
     }
 
     // Retorna um elemento específico da lista
     public GameObject Get(int index) {
-        if(map.interactables.Count == 0){
+        if(_map.interactables.Count == 0){
             Debug.LogWarning("Não há elementos na lista de interativos. Você marcou os elementos interativos com a tag interactables?");
             return null;
         }
 
         // Se o indice indicado não existir na lista ocasiona em erro
-        if(index < 0 || index > map.interactables.Count) {
+        if(index < 0 || index > _map.interactables.Count) {
             throw new IndexOutOfRangeException("Não há elementos em " + typeof(InteractableList) + " correspondendo ao índice " + index + ".");
         }
         
         _currentIndex = index;
 
-        return map.interactables[_currentIndex];
+        return _map.interactables[_currentIndex];
+    }
+
+    public int Find(GameObject go) {
+        return _map.interactables.FindIndex(g => g==go);
     }
 
 
@@ -76,7 +80,7 @@ public class InteractableList  : MonoBehaviour {
 
     //     // TODO verificar se é possível definir uma ordem para os objetos
     //     foreach (GameObject go in interactableGoList) {
-    //         map.interactables.Add(go);
+    //         _map.interactables.Add(go);
     //     }
 
     // }
@@ -87,24 +91,22 @@ public class InteractableList  : MonoBehaviour {
     public void ClearList() {
         if(isEmpty)
             return;
-        map = null;
+        _map = null;
     }
 
     public void UpdateMap(Map newInteractablesList) {
-        Debug.Log(newInteractablesList.interactables[0]);
-        map = newInteractablesList;
-        Debug.Log(isEmpty);
+        _map = newInteractablesList;
     }
 
     public void AppendToMap(Map interactableListToApend) {
         Map tempMap = new Map();
-        List<GameObject> temp = new List<GameObject>(map.interactables);
+        List<GameObject> temp = new List<GameObject>(_map.interactables);
         
         foreach (GameObject go in interactableListToApend.interactables) {
             temp.Add(go);
         }
         
         tempMap.interactables = temp;
-        map = tempMap;
+        _map = tempMap;
     }
 }

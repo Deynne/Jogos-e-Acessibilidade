@@ -204,7 +204,7 @@ namespace UnityEngine.EventSystems {
                 if (!released)
                 {
                     ProcessMove(pointer);
-                    this.ProcessDrag(pointer);
+                    ProcessDrag(pointer);
                 }
                 // Caso tenha sido solto, libera o pointer do toque.
                 else
@@ -393,58 +393,58 @@ namespace UnityEngine.EventSystems {
 
         private void PressMouseButton(PointerEventData pointerEvent, GameObject currentGo) {
             pointerEvent.eligibleForClick = true;
-                pointerEvent.delta = Vector2.zero;
-                pointerEvent.dragging = false;
-                pointerEvent.useDragThreshold = true;
-                // A posição de pressionamento deve ser a do objeto
-                pointerEvent.pressPosition = pointerEvent.position;
-                //pointerEvent.pointerPressRaycast = pointerEvent.pointerCurrentRaycast;
+            pointerEvent.delta = Vector2.zero;
+            pointerEvent.dragging = false;
+            pointerEvent.useDragThreshold = true;
+            // A posição de pressionamento deve ser a do objeto
+            pointerEvent.pressPosition = pointerEvent.position;
+            //pointerEvent.pointerPressRaycast = pointerEvent.pointerCurrentRaycast;
 
-                //DeselectIfSelectionChanged(currentGo, pointerEvent);
+            //DeselectIfSelectionChanged(currentGo, pointerEvent);
 
-                // search for the control that will receive the press
-                // if we can't find a press handler set the press
-                // handler to be what would receive a click.
-                GameObject newPressed = ExecuteEvents.GetEventHandler<IPointerDownHandler>(currentGo);
-                
-                // didnt find a press handler... search for a click handler
-                if (newPressed == null)
-                    newPressed = ExecuteEvents.GetEventHandler<IPointerClickHandler>(currentGo);
+            // search for the control that will receive the press
+            // if we can't find a press handler set the press
+            // handler to be what would receive a click.
+            GameObject newPressed = ExecuteEvents.GetEventHandler<IPointerDownHandler>(currentGo);
+            
+            // didnt find a press handler... search for a click handler
+            if (newPressed == null)
+                newPressed = ExecuteEvents.GetEventHandler<IPointerClickHandler>(currentGo);
 
-                // Debug.Log("Pressed: " + newPressed);
+            // Debug.Log("Pressed: " + newPressed);
 
-                float time = Time.unscaledTime;
+            float time = Time.unscaledTime;
 
-                if (newPressed == pointerEvent.lastPress)
-                {
-                    var diffTime = time - pointerEvent.clickTime;
-                    if (diffTime < 0.3f)
-                        ++pointerEvent.clickCount;
-                    else
-                        pointerEvent.clickCount = 1;
-
-                    pointerEvent.clickTime = time;
-                }
+            if (newPressed == pointerEvent.lastPress)
+            {
+                var diffTime = time - pointerEvent.clickTime;
+                if (diffTime < 0.3f)
+                    ++pointerEvent.clickCount;
                 else
-                {
                     pointerEvent.clickCount = 1;
-                }
-
-                if(pointerEvent.clickCount >= minClicks) {
-                    ExecuteEvents.ExecuteHierarchy(currentGo, pointerEvent, ExecuteEvents.pointerDownHandler);
-                }
-
-                pointerEvent.pointerPress = newPressed;
-                pointerEvent.rawPointerPress = currentGo;
 
                 pointerEvent.clickTime = time;
+            }
+            else
+            {
+                pointerEvent.clickCount = 1;
+            }
 
-                // Save the drag handler as well
-                pointerEvent.pointerDrag = ExecuteEvents.GetEventHandler<IDragHandler>(currentGo);
-                if (pointerEvent.pointerDrag != null)
-                    ExecuteEvents.Execute(pointerEvent.pointerDrag, pointerEvent, ExecuteEvents.initializePotentialDrag);
+            if(pointerEvent.clickCount >= minClicks) {
+                ExecuteEvents.ExecuteHierarchy(currentGo, pointerEvent, ExecuteEvents.pointerDownHandler);
+            }
 
-                _InputPointerEvent = pointerEvent;
+            pointerEvent.pointerPress = newPressed;
+            pointerEvent.rawPointerPress = currentGo;
+
+            pointerEvent.clickTime = time;
+
+            // Save the drag handler as well
+            pointerEvent.pointerDrag = ExecuteEvents.GetEventHandler<IDragHandler>(currentGo);
+            if (pointerEvent.pointerDrag != null)
+                ExecuteEvents.Execute(pointerEvent.pointerDrag, pointerEvent, ExecuteEvents.initializePotentialDrag);
+
+            _InputPointerEvent = pointerEvent;
         }
 
 
@@ -463,7 +463,7 @@ namespace UnityEngine.EventSystems {
             }
         }
         protected override void ProcessDrag(PointerEventData pointerEvent) {
-            if(Input.GetKey(KeyCode.Return) || input.touchCount > 1)
+            if(Input.GetKey(KeyCode.Space) || input.touchCount > 1)
                 base.ProcessDrag(pointerEvent);
             
         }

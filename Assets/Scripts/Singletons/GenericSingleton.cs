@@ -26,7 +26,6 @@ public class Singleton<T> : MonoBehaviour  where T : MonoBehaviour {
                     // Para melhor identificação o nome do objeto é definido como o da
                     // Singleton
                     GameObject go = new GameObject(typeof(T).ToString() + " (Singleton)");
-                    Debug.Log("entrou aqui");
                     _instance = (T) go.AddComponent(typeof(T));
                     DontDestroyOnLoad(go);    
                 }
