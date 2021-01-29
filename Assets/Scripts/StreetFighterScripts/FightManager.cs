@@ -53,9 +53,13 @@ public class FightManager : MonoBehaviour
 
         //Caso a lista temporária seja menor do que a final, adiciona o próximo golpe à temporária
         //e é checado se a sequência atual é correta.
+        
+        PopUp(lastMove.gameObject, 0.3f);
+
         if(tempMoves.Count < fightMoves.Count) {
             tempMoves.Add(newMove);
             //O áudio do golpe é tocado uma vez
+            
             
             lastMove.text = newMove.ToString();
 
@@ -71,20 +75,15 @@ public class FightManager : MonoBehaviour
             else {
                 audioSourceComponent.PlayOneShot(punchSounds[(int)newMove]);
             }
-            
-            
-
             return;
-        }
-        
-        
+        }     
         //Se a sequência estiver correta, o golpe é adicionado à lista principal e a lista temporária é zerada
         fightMoves.Add(newMove);
         //O áudio do golpe é tocado uma vez
         audioSourceComponent.PlayOneShot(punchSounds[(int)newMove]);
         lastMove.text = newMove.ToString();
         tempMoves = new List<Move>();
-                
+
         if(ShiftManagementScript.state == BattleState.ENEMYTURN) {
             //Caso o turno seja do jogador, invoca-se o botão de mudança de turno para o inimigo
             shiftManagementScript.enemyButton.onClick.Invoke();
@@ -172,5 +171,11 @@ public class FightManager : MonoBehaviour
         enemyHP.text = "HP: " + enemyFighter.hP;
         playerRounds.text = "Rounds: " + playerFighter.games;
         enemyRounds.text = "Rounds: " + enemyFighter.games;
+    }
+
+    public void PopUp(GameObject obj, float time) {
+        if(!LeanTween.isTweening(obj)) {
+            LeanTween.scale(obj,obj.transform.localScale * 2,time).setLoopPingPong(1); //Animação do texto
+        }
     }
 }

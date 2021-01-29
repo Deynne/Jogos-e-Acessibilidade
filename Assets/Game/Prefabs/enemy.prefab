@@ -96,5 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inicialHitChance: 95
   hitChance: 0
+  turnWaitTime: 1.5
+  moveWaitTime: 1
   decreaseChanceByMove: 0.5
   fightManagerScript: {fileID: 0}
