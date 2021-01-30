@@ -10,7 +10,9 @@ public class FighterAI : MonoBehaviour
     //Este valor descresce pela quantidade de "decreaseChanceByMove" a cada movimento executado.
     //(Discutir outras possíveis abordagens para a IA)
     [Range(0,100)] public float inicialHitChance = 95f;
-    [SerializeField]private float hitChance = 0;
+    [SerializeField] private float hitChance = 0;
+    [SerializeField] private float turnWaitTime = 2f; //Define o tempo de espera depois do turno do jogador
+    [SerializeField] private float moveWaitTime = 1f; //Define o tempo de espera entre movimentos
     public float decreaseChanceByMove = 0.5f;
     private bool enableCoroutine = true;
     [SerializeField] private FightManager fightManagerScript;
@@ -83,8 +85,9 @@ public class FighterAI : MonoBehaviour
 
     //Esta corotina executa um cálculo a cada segundo enquanto for o turno do inimigo, depois habilita a chamada dela mesma 
     IEnumerator AICoroutine() {
+        yield return new WaitForSeconds(turnWaitTime);
         while(ShiftManagementScript.state == BattleState.ENEMYTURN) {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(moveWaitTime);
             CalculateMove();
         }
         enableCoroutine = true;
