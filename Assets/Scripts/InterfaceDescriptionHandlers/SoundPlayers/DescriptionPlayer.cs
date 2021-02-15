@@ -104,6 +104,13 @@ public class DescriptionPlayer : MonoBehaviour, DescriptionEventHandler
         }
     }
 
-
+    public void ChangeVolumeLeft(float volume) {
+        left.volume = volume;
+        left.Play();
+    }
+    public void ChangeVolumeRight(float volume) {
+        right.volume = volume;
+        right.Play();
+    }
 
 }

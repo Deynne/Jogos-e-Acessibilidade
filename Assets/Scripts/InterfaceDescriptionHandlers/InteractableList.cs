@@ -70,7 +70,19 @@ public class InteractableList  : MonoBehaviour {
     }
 
     public int Find(GameObject go) {
-        return _map.interactables.FindIndex(g => g==go);
+        if(go == null) return -1;
+        return _map.interactables.FindIndex(g => {
+                                                    if(g == go) return true;
+                                                    else {
+                                                        Component[] t;
+                                                        t = go.GetComponentsInChildren(typeof(Transform));
+                                                        
+                                                        foreach(Transform tr in t) {
+                                                            if(g == tr.gameObject) return true;
+                                                        }
+                                                    }
+                                                    return false;
+                                                 });
     }
 
 

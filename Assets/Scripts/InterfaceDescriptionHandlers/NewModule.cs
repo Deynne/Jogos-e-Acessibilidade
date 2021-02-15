@@ -15,6 +15,8 @@ namespace UnityEngine.EventSystems
     {
         private bool useRaycastObject;
         private bool holding;
+        private bool moving;
+        private bool dragging;
         private bool swipe;
         // Acessa o singleton contendo a lista de interagíveis
         private InteractableList interactableList;
@@ -221,13 +223,10 @@ namespace UnityEngine.EventSystems
             
             var pointerUpHandler = ExecuteEvents.GetEventHandler<IPointerClickHandler>(currentOverGo);
             
-            Debug.Log(pointerEvent.pointerPress);
-            Debug.Log(pointerUpHandler);
-            Debug.Log(pointerEvent.eligibleForClick);
-            Debug.Log(pointerEvent.pointerPress == pointerUpHandler && pointerEvent.eligibleForClick);
             // PointerClick and Drop events
-            if ((pointerEvent.pointerPress == pointerUpHandler || !(Input.GetKey(KeyCode.Space) && input.touchCount > 1)) && pointerEvent.eligibleForClick)
+            if ((pointerEvent.pointerPress == pointerUpHandler || !Input.GetKey(KeyCode.Space)) && pointerEvent.eligibleForClick)
             {
+                Debug.Log(!dragging);
                 if(useRaycastObject)
                     ExecuteEvents.Execute(pointerEvent.pointerPress, pointerEvent, ExecuteEvents.pointerClickHandler);
                 else {
@@ -235,19 +234,18 @@ namespace UnityEngine.EventSystems
                     // TODO Testar a necessidade de uma margem de erro para evitar deslizes indesejados
                     float diff = m_LastMousePosition.x - m_MousePosition.x;
 
-                    Debug.Log(m_LastMousePosition.x + " - " + m_MousePosition.x + " = " + diff);
                     // Uma flag para indicar se o movimento foi de toque ou deslize
                     swipe = false;
                     // Se o valor for negativo é um deslize para esquerda, caso contrário para direita
                     // À esquerda o item anterior é selecionado, a direita o item posterior é selecionado
                     // O movimento é realizado de forma cíclica pela interface
-                    if(diff < 0 && !interactableList.isEmpty) {
+                    if(!dragging && diff < 0 && !interactableList.isEmpty) {
                         currentOverGo = interactableList.Next();
                         eventSystem.SetSelectedGameObject(currentOverGo);
                         swipe = true;
                         ExecuteEvents.ExecuteHierarchy(currentOverGo,pointerEvent,pointerDescriptionHandler);
                     }
-                    else if(diff > 0 && !interactableList.isEmpty) {
+                    else if(!dragging && diff > 0 && !interactableList.isEmpty) {
                         currentOverGo = interactableList.Previous();
                         eventSystem.SetSelectedGameObject(currentOverGo);
                         swipe = true;
@@ -499,7 +497,7 @@ namespace UnityEngine.EventSystems
                 var pointerUpHandler = ExecuteEvents.GetEventHandler<IPointerClickHandler>(currentOverGo);
 
                 // PointerClick and Drop events
-                if (pointerEvent.pointerPress == pointerUpHandler && pointerEvent.eligibleForClick)
+                if ((pointerEvent.pointerPress == pointerUpHandler || input.touchCount > 1) && pointerEvent.eligibleForClick)
                 {
                     if(useRaycastObject)
                         ExecuteEvents.Execute(pointerEvent.pointerPress, pointerEvent, ExecuteEvents.pointerClickHandler);
@@ -657,7 +655,7 @@ namespace UnityEngine.EventSystems
             var mouseData = GetMousePointerEventData(id);
             var leftButtonData = mouseData.GetButtonState(PointerEventData.InputButton.Left).eventData;
 
-            m_CurrentFocusedGameObject = leftButtonData.buttonData.pointerCurrentRaycast.gameObject;
+            m_CurrentFocusedGameObject = useRaycastObject?leftButtonData.buttonData.pointerCurrentRaycast.gameObject:interactableList.focusedGo;
 
             // Process the first mouse button fully
             ProcessMousePress(leftButtonData);
@@ -774,7 +772,9 @@ namespace UnityEngine.EventSystems
             if (data.ReleasedThisFrame())
             {
                 holding = false;
+                moving = false;
                 ReleaseMouse(pointerEvent, currentOverGo);
+                dragging = false;
             }
         }
 
@@ -800,18 +800,22 @@ namespace UnityEngine.EventSystems
 
 
         protected override void ProcessDrag(PointerEventData pointerEvent) {
-            if(Input.GetKey(KeyCode.Space) || input.touchCount > 1)
-                base.ProcessDrag(pointerEvent);           
+            if((Input.GetKey(KeyCode.Space) || input.touchCount > 1) && !moving){
+                dragging = true;
+                base.ProcessDrag(pointerEvent);
+            }
         }
 
         protected override void ProcessMove(PointerEventData pointerEvent) {
             float time = Time.unscaledTime;
             float diff = time - lastPressedTime;
-                if(holding && diff > 0.5f && pointerEvent.clickCount < 2) {
+                if(holding && !dragging && diff > 0.5f && pointerEvent.clickCount < 2) {
                     var currentOverGo = pointerEvent.pointerCurrentRaycast.gameObject;
+                    if(currentOverGo == null) return;
                     int index = interactableList.Find(currentOverGo);
-                    if(currentOverGo != null && index >= 0) {
-                        interactableList.Get(index);
+                    if(index >= 0) {
+                        moving = true;
+                        currentOverGo = interactableList.Get(index);
                         eventSystem.SetSelectedGameObject(currentOverGo);
                         ExecuteEvents.ExecuteHierarchy(currentOverGo,pointerEvent,pointerDescriptionHandler);
                     }
