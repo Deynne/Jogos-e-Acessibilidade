@@ -21,6 +21,7 @@ public class SceneChanger : MonoBehaviour
     {
         if(path.Equals("") || path == null)
             return;
+        Debug.Log(path);
         SceneManager.LoadScene(path);
     }
 

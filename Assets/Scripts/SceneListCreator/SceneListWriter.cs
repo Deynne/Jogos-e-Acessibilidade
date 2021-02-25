@@ -39,7 +39,7 @@ public class SceneListWriter : MonoBehaviour
             if (Regex.IsMatch(path,regex)) {
 
                 name = Regex.Match(path,regex).Value;
-                
+                path = path.Substring(7,path.Length-7-6);
                 sceneDataList.list.Add(new SceneData(path, NameFilter(name), audioDescriptionFolder + name.Substring(1,name.Length-2)));
             }
         }

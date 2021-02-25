@@ -108,6 +108,7 @@ public class InteractableList  : MonoBehaviour {
 
     public void UpdateMap(Map newInteractablesList) {
         _map = newInteractablesList;
+        _currentIndex = 0;
     }
 
     public void AppendToMap(Map interactableListToApend) {

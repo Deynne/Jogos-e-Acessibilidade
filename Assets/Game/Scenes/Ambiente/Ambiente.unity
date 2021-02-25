@@ -141,7 +141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &123104860
 RectTransform:
   m_ObjectHideFlags: 0
@@ -582,6 +582,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2120844936}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &224837028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224837027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dca546543841da74ab4e2beb3cb9a2d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentCanvas: {fileID: 123104859}
 --- !u!1001 &342550862
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -938,9 +951,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 674361816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a842f52e3707d6f4e8d98f6b90e826f6, type: 3}
+  m_Script: {fileID: 11500000, guid: dca546543841da74ab4e2beb3cb9a2d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentCanvas: {fileID: 1597812996}
 --- !u!1 &882581583
 GameObject:
   m_ObjectHideFlags: 0
@@ -1163,6 +1177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   descriptionPlayer: {fileID: 1221308556}
+  side: 0
 --- !u!114 &1221308556 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 530315417155289001, guid: 5b0ee7cc3533e59219707c0892765169,
@@ -1268,12 +1283,12 @@ PrefabInstance:
     - target: {fileID: 571537412722942054, guid: 5b0ee7cc3533e59219707c0892765169,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1783802349246804140, guid: 5b0ee7cc3533e59219707c0892765169,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2323941306566499162, guid: 5b0ee7cc3533e59219707c0892765169,
         type: 3}
@@ -1606,6 +1621,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   descriptionPlayer: {fileID: 1381469645}
+  side: 1
 --- !u!1001 &1383840522
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1651,7 +1667,7 @@ PrefabInstance:
     - target: {fileID: 7849416207700577146, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207700577146, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
@@ -1666,18 +1682,23 @@ PrefabInstance:
     - target: {fileID: 7849416207700577146, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: LoadGame
+      value: changeCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207700577146, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7849416207700577146, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
       value: Ambiente
       objectReference: {fileID: 0}
+    - target: {fileID: 7849416207700577146, guid: 4ecac2332b7699d599331d4fe2672138,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 123104859}
     - target: {fileID: 7849416207700577147, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
@@ -2075,7 +2096,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1597812997
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2526,6 +2547,41 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 7849416207700577146, guid: 4ecac2332b7699d599331d4fe2672138,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849416207700577146, guid: 4ecac2332b7699d599331d4fe2672138,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849416207700577146, guid: 4ecac2332b7699d599331d4fe2672138,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849416207700577146, guid: 4ecac2332b7699d599331d4fe2672138,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 224837028}
+    - target: {fileID: 7849416207700577146, guid: 4ecac2332b7699d599331d4fe2672138,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: changeCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849416207700577146, guid: 4ecac2332b7699d599331d4fe2672138,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849416207700577146, guid: 4ecac2332b7699d599331d4fe2672138,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1597812996}
     - target: {fileID: 7849416207700577147, guid: 4ecac2332b7699d599331d4fe2672138,
         type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
@@ -2668,12 +2724,12 @@ PrefabInstance:
     - target: {fileID: 571537412722942054, guid: 5b0ee7cc3533e59219707c0892765169,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1783802349246804140, guid: 5b0ee7cc3533e59219707c0892765169,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2323941306566499162, guid: 5b0ee7cc3533e59219707c0892765169,
         type: 3}
