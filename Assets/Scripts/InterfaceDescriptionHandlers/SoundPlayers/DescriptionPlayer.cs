@@ -21,7 +21,8 @@ public class DescriptionPlayer : MonoBehaviour, DescriptionEventHandler
     private void SetVariables() {
         if(audioClip == null) 
             throw new NullReferenceException("A descrição de audio para " + this + " não foi atribuída.");
-        Component [] audioDescriptions = gameObject.GetComponentsInParent(typeof(AudioSource)) as Component[];
+        GameObject g = GameObject.Find("SoundHandler");
+        Component [] audioDescriptions = g.GetComponentsInParent(typeof(AudioSource)) as Component[];
         if(audioDescriptions == null)
             throw new NullReferenceException("O componente de reprodução de audio não foi encontrado no objeto " + gameObject.transform.parent + ".");
         AudioSource a;
@@ -29,10 +30,8 @@ public class DescriptionPlayer : MonoBehaviour, DescriptionEventHandler
             a = audioDescriptions[i] as AudioSource;
             if(a.panStereo < 0) {
                 left = a;
-                left.volume = PlayerPrefs.GetFloat("leftVolume",1);
             } else if(a.panStereo > 0) {
                 right = a;
-                right.volume = PlayerPrefs.GetFloat("rightVolume",1);
             }
         }
             

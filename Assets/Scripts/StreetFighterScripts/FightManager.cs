@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public enum Move {UP, DOWN, LEFT, RIGHT}
 public class Fighter {
@@ -28,16 +29,25 @@ public class FightManager : MonoBehaviour
     [SerializeField] private AudioClip damageSound;
     [SerializeField] private AudioClip victoryDescription;
     [SerializeField] private AudioClip defeatDescription;
-    private AudioSource audioSourceComponent;
+    private AudioSource left,right;
     public Fighter playerFighter = new Fighter();
     public Fighter enemyFighter = new Fighter();
 
 
     //No início, os HP dos lutadores são determinados
     private void Start() {        
-        audioSourceComponent = GetComponent<AudioSource>();
-        if(audioSourceComponent == null) {
-            Debug.LogWarning("AudioSource não encontrado");
+        GameObject g = GameObject.Find("SoundHandler");
+        Component [] audioDescriptions = g.GetComponentsInParent(typeof(AudioSource)) as Component[];
+        if(audioDescriptions == null)
+            throw new NullReferenceException("O componente de reprodução de audio não foi encontrado no objeto " + gameObject.transform.parent + ".");
+        AudioSource a;
+        for (int i = 0; i < audioDescriptions.Length; i++) {
+            a = audioDescriptions[i] as AudioSource;
+            if(a.panStereo < 0) {
+                left = a;
+            } else if(a.panStereo > 0) {
+                right = a;
+            }
         }
         playerFighter.hP = hpInicial;
         enemyFighter.hP = hpInicial;
@@ -70,17 +80,20 @@ public class FightManager : MonoBehaviour
             }
             else if (tempMoves.Count == fightMoves.Count && ShiftManagementScript.state== BattleState.PLAYERTURN) {
                 inputText.text = "Faça um movimento novo!";
-                audioSourceComponent.PlayOneShot(punchSounds[(int)newMove]);
+                left.PlayOneShot(punchSounds[(int)newMove]);
+                right.PlayOneShot(punchSounds[(int)newMove]);
             }
             else {
-                audioSourceComponent.PlayOneShot(punchSounds[(int)newMove]);
+                left.PlayOneShot(punchSounds[(int)newMove]);
+                right.PlayOneShot(punchSounds[(int)newMove]);
             }
             return;
         }     
         //Se a sequência estiver correta, o golpe é adicionado à lista principal e a lista temporária é zerada
         fightMoves.Add(newMove);
         //O áudio do golpe é tocado uma vez
-        audioSourceComponent.PlayOneShot(punchSounds[(int)newMove]);
+        left.PlayOneShot(punchSounds[(int)newMove]);
+        right.PlayOneShot(punchSounds[(int)newMove]);
         lastMove.text = newMove.ToString();
         tempMoves = new List<Move>();
 
@@ -110,7 +123,8 @@ public class FightManager : MonoBehaviour
     //Esta função checa de quem é o turno e remove um de HP do lutador respectivo
     public void TakeDamage() {
         //Audio de dano toca.
-        audioSourceComponent.PlayOneShot(damageSound);
+        left.PlayOneShot(damageSound);
+        right.PlayOneShot(damageSound);
 
         if(ShiftManagementScript.state == BattleState.PLAYERTURN) {
             playerFighter.hP--;
@@ -152,15 +166,19 @@ public class FightManager : MonoBehaviour
             lastMove.text = "Você ganhou a luta! :DDDD";
             // yield return new WaitForSeconds(1);
             // sceneChanger.LoadGame("_StreetFighter");
-            audioSourceComponent.PlayOneShot(victoryDescription);
+            
+
+            left.PlayOneShot(victoryDescription);
+            right.PlayOneShot(victoryDescription);
         } else if(enemyFighter.games == gamesToWin) {
             lastMove.text = "Você perdeu a luta! :(";
-            audioSourceComponent.PlayOneShot(defeatDescription);
+            left.PlayOneShot(defeatDescription);
+            right.PlayOneShot(defeatDescription);
             // yield return new WaitForSeconds(3);
             // sceneChanger.LoadGame("_StreetFighter");
 
         }
-        while(audioSourceComponent.isPlaying) yield return null;       
+        while(left.isPlaying) yield return null;       
         sceneChanger.LoadGame("_StreetFighter");
 
         yield return null;

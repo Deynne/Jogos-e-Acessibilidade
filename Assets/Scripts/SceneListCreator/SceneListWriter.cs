@@ -72,10 +72,7 @@ public class SceneListWriter : MonoBehaviour
     }
     // Remove os caracteres "_" e "." do nome da palavra e insere um espaço em branco
     private string NameFilter(string name) {
-        Debug.Log(name);
         string s = name.Substring(2,name.Length-3);
-        Debug.Log(s);
-        Debug.Log(Regex.Replace(s, "(\\B[A-Z])", " $1"));
         return Regex.Replace(s, "(\\B[A-Z])", " $1");
     }
 }
