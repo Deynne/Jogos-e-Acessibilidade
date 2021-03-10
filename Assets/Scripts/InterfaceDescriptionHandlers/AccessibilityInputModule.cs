@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+// Modulo para interação segundo funções de acessibilidade do jogo.
 namespace UnityEngine.EventSystems
 {
     [AddComponentMenu("Event/Accessibility Input Module")]
@@ -797,7 +798,7 @@ namespace UnityEngine.EventSystems
             }
         }
 
-
+        // Só permite arrastar em situações específicas. Segurando espaço para PC e com 2 toques para touch
         protected override void ProcessDrag(PointerEventData pointerEvent) {
             if((Input.GetKey(KeyCode.Space) || input.touchCount > 1) && !moving){
                 dragging = true;
@@ -805,6 +806,8 @@ namespace UnityEngine.EventSystems
             }
         }
 
+        // A ideia é que a interação possa ser feita movendo o mouse enquanto clica/toca na tela e move
+        // o dedo. Interação mais fluida.
         protected override void ProcessMove(PointerEventData pointerEvent) {
             float time = Time.unscaledTime;
             float diff = time - lastPressedTime;

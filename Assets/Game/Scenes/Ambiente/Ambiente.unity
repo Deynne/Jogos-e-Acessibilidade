@@ -591,7 +591,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 224837027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dca546543841da74ab4e2beb3cb9a2d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 77b07ecdf4b099a4a8b5be0739bdcd24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentCanvas: {fileID: 123104859}
@@ -951,7 +951,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 674361816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dca546543841da74ab4e2beb3cb9a2d6, type: 3}
+  m_Script: {fileID: 11500000, guid: 77b07ecdf4b099a4a8b5be0739bdcd24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   currentCanvas: {fileID: 1597812996}

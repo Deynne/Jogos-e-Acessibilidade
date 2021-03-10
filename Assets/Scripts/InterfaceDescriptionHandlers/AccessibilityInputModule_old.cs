@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 
+// Modulo Depreciado. Mantido para documentação futura em TCC.
+
 // Esta classe é uma cópia adaptada do StandaloneInputModule e é utilizada para
 // Adaptar a leitura de dados para o formato de acessibilidade
 namespace UnityEngine.EventSystems {

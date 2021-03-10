@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-
+// Armazena os dados relativos as scenes principais de cada jogo e a descrição de audio do nome destes jogos
 [Serializable]
 public class SceneData {
     [SerializeField]

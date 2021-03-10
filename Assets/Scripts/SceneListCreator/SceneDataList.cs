@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Uma lista contendo os dados de todos os jogos e as descrições de audio de seus nomes.
 [Serializable]
 public class SceneDataList {
 

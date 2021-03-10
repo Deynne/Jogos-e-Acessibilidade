@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using UnityEngine.UIElements;
+// Lida com as interações com a aplicação.
+// Identifica quais são os elementos interativos e quais podem ou não ser focados/ acompanham descrição
+// auditiva.
 public class InteractableList  : MonoBehaviour {
 
     // Lista que armazena referência para todos os elementos interativos da interface.
@@ -69,6 +72,7 @@ public class InteractableList  : MonoBehaviour {
         return _map.interactables[_currentIndex];
     }
 
+    // Busca no objeto ou seus filhos qual deles é um objeto interativo.
     public int Find(GameObject go) {
         if(go == null) return -1;
         return _map.interactables.FindIndex(g => {
@@ -85,7 +89,7 @@ public class InteractableList  : MonoBehaviour {
                                                  });
     }
 
-
+    // Não tem mais uso. Substituído por Map
     // Busca pela Scene todos os objetos com a tag Interactables e adiciona na lista
     // public void FindInteractables() {
     //     GameObject [] interactableGoList = GameObject.FindGameObjectsWithTag("Interactable");
@@ -100,18 +104,24 @@ public class InteractableList  : MonoBehaviour {
     // Permite que a lista seja limpa
     // Pode ser utilizado para permitir elimitação de lixo de memória e repopulação da
     // Lista.
+    [Obsolete("Metodo não é mais utilizado. Substituído por UpdateMap. Ver classe Map")]
     public void ClearList() {
         if(isEmpty)
             return;
         _map = null;
     }
 
+    // Utilizado em mudanças de tela.
     public void UpdateMap(Map newInteractablesList) {
         _map = newInteractablesList;
         _currentIndex = 0;
     }
 
+    // Em caso de criação de elementos interativos dinâmicamentemte. Realiza a função de adição do elemento
+    // ao mapa.
+    // Desenvolvida especificamente para a tela de listar jogos
     public void AppendToMap(Map interactableListToApend) {
+        // Cria um novo mapa para que os novos elementos sejam adicionados ao início da lista.
         Map tempMap = new Map();
         List<GameObject> temp = new List<GameObject>(_map.interactables);
         

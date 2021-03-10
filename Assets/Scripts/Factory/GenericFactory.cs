@@ -9,7 +9,7 @@ public class GenericFactory<T> : MonoBehaviour where T : MonoBehaviour
     // prefab do objeto a ser fabricado
     public T prefab;
 
-
+    // Funçpes para a criação de objetos ingame.
     public T make(Vector3 position) {
         if(prefab == null) throw new NullReferenceException("o prefab para " + typeof(T).ToString() + " não foi definido.");
         return Instantiate(prefab,position, new Quaternion(0,0,0,0));
