@@ -12,10 +12,10 @@ EditorBuildSettings:
     path: Assets/Game/Scenes/Ambiente/Ambiente_Carregamento_Cenas.unity
     guid: a84e7491258b7a6459cf7e50e706e147
   - enabled: 1
-    path: Assets/Game/Scenes/Jogos/Street Fighter/_StreetFighter.unity
+    path: Assets/Game/Scenes/Jogos/Sequencia de Combate/_SequenciaDeCombate.unity
     guid: 27bc3aa2d4f78d36fbdddb47420dbe0b
   - enabled: 1
-    path: Assets/Game/Scenes/Jogos/Street Fighter/StreetFighter_game.unity
+    path: Assets/Game/Scenes/Jogos/Sequencia de Combate/SequenciaDeCombate.unity
     guid: f68fe7c401d3a724698b2514ed8c78da
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: c7267d0adc92b1646ba0fba3c27cc2c0,

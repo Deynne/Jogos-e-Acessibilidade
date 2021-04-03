@@ -16,6 +16,7 @@ public class FightManager : MonoBehaviour
     public int gamesToWin = 2;
     public List<Move> fightMoves = new List<Move>();
     public List<Move> tempMoves = new List<Move>();
+    #pragma warning disable CS0649
     [SerializeField] private ShiftManagementScript shiftManagementScript;
     [SerializeField] private Text playerHP;
     [SerializeField] private Text playerRounds;
@@ -29,6 +30,7 @@ public class FightManager : MonoBehaviour
     [SerializeField] private AudioClip damageSound;
     [SerializeField] private AudioClip victoryDescription;
     [SerializeField] private AudioClip defeatDescription;
+    #pragma warning restore CS0649
     private AudioSource left,right;
     public Fighter playerFighter = new Fighter();
     public Fighter enemyFighter = new Fighter();
@@ -179,7 +181,7 @@ public class FightManager : MonoBehaviour
 
         }
         while(left.isPlaying) yield return null;       
-        sceneChanger.LoadGame("_StreetFighter");
+        sceneChanger.LoadGame("_Sequencia_de_combate");
 
         yield return null;
     }

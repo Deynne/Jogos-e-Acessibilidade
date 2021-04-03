@@ -344,7 +344,6 @@ namespace UnityEngine.EventSystems
 
         public override void Process()
         {
-            // Debug.Log(useRaycastObject);
             if (!eventSystem.isFocused && ShouldIgnoreEventsOnNoFocus() || DescriptionPlayer.playingTutorial)
                 return;
 
@@ -379,10 +378,9 @@ namespace UnityEngine.EventSystems
                 bool released;
                 bool pressed;
                 var pointer = GetTouchPointerEventData(touch, out pressed, out released);
-
                 ProcessTouchPress(pointer, pressed, released);
 
-                if (!released)
+                if (!released && i == 0)
                 {
                     ProcessMove(pointer);
                     ProcessDrag(pointer);
@@ -404,10 +402,7 @@ namespace UnityEngine.EventSystems
         /// </remarks>
         protected void ProcessTouchPress(PointerEventData pointerEvent, bool pressed, bool released)
         {
-
             float holdTime = Time.unscaledTime;
-            // Debug.Log(holdTime);
-            // Debug.Log(lastPressedTime);
             // useRaycastObject = holdTime - lastPressedTime >= 0.5f;
             // lastPressedTime = Time.unscaledTime;
 
@@ -426,12 +421,12 @@ namespace UnityEngine.EventSystems
                 if(useRaycastObject)
                     DeselectIfSelectionChanged(currentOverGo, pointerEvent);
 
-                if (pointerEvent.pointerEnter != currentOverGo)
-                {
-                    // send a pointer enter to the touched element if it isn't the one to select...
-                    HandlePointerExitAndEnter(pointerEvent, currentOverGo);
-                    pointerEvent.pointerEnter = currentOverGo;
-                }
+                // if (pointerEvent.pointerEnter != currentOverGo)
+                // {
+                //     // send a pointer enter to the touched element if it isn't the one to select...
+                //     HandlePointerExitAndEnter(pointerEvent, currentOverGo);
+                //     pointerEvent.pointerEnter = currentOverGo;
+                // }
 
                 GameObject newPressed;
                 if(useRaycastObject)
@@ -446,15 +441,16 @@ namespace UnityEngine.EventSystems
                 if (newPressed == null)
                     newPressed = ExecuteEvents.GetEventHandler<IPointerClickHandler>(currentOverGo);
 
-                // Debug.Log("Pressed: " + newPressed);
 
                 float time = Time.unscaledTime;
 
-                if (newPressed == pointerEvent.lastPress)
+                var currentPointerEvent = m_InputPointerEvent != null?m_InputPointerEvent:pointerEvent;
+
+                if (newPressed == currentPointerEvent.lastPress)
                 {
-                    var diffTime = time - pointerEvent.clickTime;
+                    var diffTime = time - currentPointerEvent.clickTime;
                     if (diffTime < 0.3f)
-                        ++pointerEvent.clickCount;
+                        pointerEvent.clickCount += currentPointerEvent.clickCount+1;
                     else
                         pointerEvent.clickCount = 1;
 
@@ -464,13 +460,13 @@ namespace UnityEngine.EventSystems
                 {
                     pointerEvent.clickCount = 1;
                 }
-
+                
                 // Caso seja uma interação que o evento evento de "pressionar ocorra"
                 // Tem maiores efeitos na responsividade do sistema.
                 if(!useRaycastObject && pointerEvent.clickCount >= minClicks) {
                     ExecuteEvents.ExecuteHierarchy(currentOverGo, pointerEvent, ExecuteEvents.pointerDownHandler);
                 }
-
+                
                 pointerEvent.pointerPress = newPressed;
                 pointerEvent.rawPointerPress = currentOverGo;
 
@@ -488,34 +484,33 @@ namespace UnityEngine.EventSystems
             // PointerUp notification
             if (released)
             {
-                // Debug.Log("Executing pressup on: " + pointer.pointerPress);
                 ExecuteEvents.Execute(pointerEvent.pointerPress, pointerEvent, ExecuteEvents.pointerUpHandler);
-
-                // Debug.Log("KeyCode: " + pointer.eventData.keyCode);
 
                 // see if we mouse up on the same element that we clicked on...
                 var pointerUpHandler = ExecuteEvents.GetEventHandler<IPointerClickHandler>(currentOverGo);
 
                 // PointerClick and Drop events
-                if ((pointerEvent.pointerPress == pointerUpHandler || input.touchCount > 1) && pointerEvent.eligibleForClick)
+                if ((pointerEvent.pointerPress == pointerUpHandler || input.touchCount > 0) && pointerEvent.eligibleForClick)
                 {
                     if(useRaycastObject)
                         ExecuteEvents.Execute(pointerEvent.pointerPress, pointerEvent, ExecuteEvents.pointerClickHandler);
-                    else {
+                    else if(input.touchCount == 1) {
                         float diff = m_LastMousePosition.x - m_MousePosition.x;
+                        Debug.Log(diff);
                         swipe = false;
-                        if(diff < 0 && !interactableList.isEmpty) {
+                        if(diff < -1 && !interactableList.isEmpty) {
                             swipe = true;
-                            eventSystem.SetSelectedGameObject(interactableList.Next());
+                            currentOverGo = interactableList.Next();
+                            eventSystem.SetSelectedGameObject(currentOverGo);
                             ExecuteEvents.ExecuteHierarchy(currentOverGo,pointerEvent,pointerDescriptionHandler);
                         }
-                        else if(diff > 0 && !interactableList.isEmpty) {
+                        else if(diff > 1 && !interactableList.isEmpty) {
                             swipe = true;
-                            eventSystem.SetSelectedGameObject(interactableList.Previous());
+                            currentOverGo = interactableList.Previous();
+                            eventSystem.SetSelectedGameObject(currentOverGo);
                             ExecuteEvents.ExecuteHierarchy(currentOverGo,pointerEvent,pointerDescriptionHandler);
                         }
-                        
-                        if(pointerEvent.clickCount > minClicks) {
+                        if(m_InputPointerEvent.clickCount >= minClicks) {
                             ExecuteEvents.Execute(pointerEvent.pointerPress, pointerEvent, ExecuteEvents.pointerClickHandler);
                         }
                         else if(!swipe) {
@@ -523,7 +518,7 @@ namespace UnityEngine.EventSystems
                         }
                     }
                 }
-                else if (pointerEvent.pointerDrag != null && pointerEvent.dragging)
+                else if (pointerEvent.pointerDrag != null && pointerEvent.dragging && input.touchCount > 1)
                 {
                     ExecuteEvents.ExecuteHierarchy(currentOverGo, pointerEvent, ExecuteEvents.dropHandler);
                 }
@@ -542,7 +537,7 @@ namespace UnityEngine.EventSystems
                 ExecuteEvents.ExecuteHierarchy(pointerEvent.pointerEnter, pointerEvent, ExecuteEvents.pointerExitHandler);
                 pointerEvent.pointerEnter = null;
 
-                m_InputPointerEvent = pointerEvent;
+                // m_InputPointerEvent = pointerEvent;
             }
         }
 
@@ -693,8 +688,6 @@ namespace UnityEngine.EventSystems
             var pointerEvent = data.buttonData;
 
             float holdTime = Time.unscaledTime;
-            // Debug.Log(holdTime);
-            // Debug.Log(lastPressedTime);
             // useRaycastObject = holdTime - lastPressedTime >= 0.5f;
             // lastPressedTime = Time.unscaledTime;
             
@@ -728,7 +721,6 @@ namespace UnityEngine.EventSystems
                 if (newPressed == null)
                     newPressed = ExecuteEvents.GetEventHandler<IPointerClickHandler>(currentOverGo);
                 
-                // Debug.Log("Pressed: " + newPressed);
 
                 float time = Time.unscaledTime;
 
@@ -787,11 +779,11 @@ namespace UnityEngine.EventSystems
         // TODO Verificar a possibilidade de popular a lista de outros meios
         protected override void Start() {
             base.Start();
+            useRaycastObject = false;
             interactableList = ListSingleton.instance;
             // interactableList.ClearList();
             //interactableList.FindInteractables();
             if(!interactableList.isEmpty) {
-                // Debug.Log(interactableList.focusedGo);
                 eventSystem.SetSelectedGameObject(interactableList.focusedGo);
                 DescriptionPlayer dp = interactableList.focusedGo.GetComponent(typeof(DescriptionPlayer)) as DescriptionPlayer;
                 dp.OnDescriptorPress(null);

@@ -5,11 +5,18 @@ using System;
 
 public class SoundHandler : MonoBehaviour
 {
+    private static GameObject instance;
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
-
+        if(instance == null) {
+            instance = this.gameObject;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else {
+            Destroy(this.gameObject);
+            return;
+        }        
         Component [] audioDescriptions = this.gameObject.GetComponentsInParent(typeof(AudioSource)) as Component[];
         if(audioDescriptions == null)
             throw new NullReferenceException("O componente de reprodução de audio não foi encontrado no objeto " + gameObject.transform.parent + ".");

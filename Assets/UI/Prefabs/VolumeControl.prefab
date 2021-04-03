@@ -154,7 +154,6 @@ GameObject:
   - component: {fileID: 9138002656532524478}
   - component: {fileID: 1451864011546691841}
   - component: {fileID: 3848833278783916535}
-  - component: {fileID: 4588148807939960711}
   m_Layer: 5
   m_Name: Tittle
   m_TagString: Readable
@@ -222,19 +221,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Volume kind
---- !u!114 &4588148807939960711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1767354610500744102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22bea18aef12909dfbe4a1e4c8d32979, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioClip: {fileID: 0}
 --- !u!1 &2269669196449756490
 GameObject:
   m_ObjectHideFlags: 0

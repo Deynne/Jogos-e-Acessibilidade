@@ -18,6 +18,8 @@ public class ShiftManagementScript : MonoBehaviour
     public Transform playerBattleStation;
     public Transform enemyBattleStation;
 
+    public TextPlayer textPlayer;
+
     //Variável colocada como static para acesso mais fácil por outros scripts
     public static BattleState state;
 
@@ -45,6 +47,9 @@ public class ShiftManagementScript : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         UIText.text = "Player, inicie a batalha!";
+        textPlayer.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce_tem"),
+                                  Resources.Load<AudioClip>(TextPlayer.SONS_NUMEROS + "3"),
+                                  Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/pontos_de_vida"));
 
         // Muda o estado da batalha pra que o player inicie e chama o manipulador de players
         state = BattleState.PLAYERTURN;

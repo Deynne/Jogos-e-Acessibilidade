@@ -31,7 +31,6 @@ public class SwipeDetector : MonoBehaviour
     }
 
     public void CheckSwipe() {
-        
         //Aqui checa-se se existe exatamente um dedo ativo na tela
         if(Touch.activeFingers.Count == 1) {
             

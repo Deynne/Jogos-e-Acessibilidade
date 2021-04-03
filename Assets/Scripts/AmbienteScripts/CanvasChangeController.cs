@@ -8,8 +8,10 @@ public class CanvasChangeController : MonoBehaviour
 {
     // Salva a instância da Canvas (A tela) atualmente ativo. A ideia é que todo botão de mudança de canvas tenha a
     // referêcia para o seu canvas.
+    #pragma warning disable CS0649
     [SerializeField]
     private GameObject currentCanvas;
+    #pragma warning restore CS0649
     // Realiza a mudança do canvas, desativando o atual e desativando o novo.
     public void changeCanvas(GameObject newCanvas) {
         // Troca o canvas ativo

@@ -11,7 +11,7 @@ public class DescriptionPlayer : MonoBehaviour, DescriptionEventHandler
     private static AudioClip currentClip;
     private static bool _playingTutorial;
 
-    public static bool playingTutorial {get => _playingTutorial;}
+    public static bool playingTutorial {get => _playingTutorial; set=>_playingTutorial = value;}
 
 
     private void OnEnable() {
@@ -22,7 +22,7 @@ public class DescriptionPlayer : MonoBehaviour, DescriptionEventHandler
         if(audioClip == null) 
             throw new NullReferenceException("A descrição de audio para " + this + " não foi atribuída.");
         GameObject g = GameObject.Find("SoundHandler");
-        Component [] audioDescriptions = g.GetComponentsInParent(typeof(AudioSource)) as Component[];
+        Component [] audioDescriptions = g.GetComponents(typeof(AudioSource)) as Component[];
         if(audioDescriptions == null)
             throw new NullReferenceException("O componente de reprodução de audio não foi encontrado no objeto " + gameObject.transform.parent + ".");
         AudioSource a;
@@ -82,16 +82,17 @@ public class DescriptionPlayer : MonoBehaviour, DescriptionEventHandler
             
     }
 
-    public void PlayTutorial(AudioClip tutorial) {
-        if(!_playingTutorial && tutorial != null) {
-            left.clip = tutorial;
-            right.clip = tutorial;
-            DescriptionPlayer dp = ListSingleton.instance.focusedGo.GetComponent(typeof(DescriptionPlayer)) as DescriptionPlayer;
-            currentClip = dp.audioClip;
-            left.Play();
-            right.Play();
-            _playingTutorial = true;
-        }
+    public static void UpdateCurrentClip(AudioClip clip) {
+        // if(!_playingTutorial && tutorial != null) {
+            // left.clip = tutorial;
+            // right.clip = tutorial;
+            // DescriptionPlayer dp = 
+            // currentClip = dp.audioClip;
+            currentClip = clip;
+            // left.Play();
+            // right.Play();
+            // _playingTutorial = true;
+        // }
     }
 
     // Tocar o audio do primeiro botão após o fim do tutorial
