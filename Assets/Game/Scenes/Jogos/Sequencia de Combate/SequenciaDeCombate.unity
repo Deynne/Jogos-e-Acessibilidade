@@ -508,7 +508,7 @@ MonoBehaviour:
   enemyButton: {fileID: 1631579575}
   playerBattleStation: {fileID: 2064107325}
   enemyBattleStation: {fileID: 1255069745}
-  textPlayer: {fileID: 0}
+  textPlayer: {fileID: 881062160}
   UIText: {fileID: 272643591}
 --- !u!4 &419783012
 Transform:
@@ -1279,12 +1279,13 @@ MonoBehaviour:
   lastMove: {fileID: 2019695932}
   inputText: {fileID: 272643591}
   punchSounds:
-  - {fileID: 8300000, guid: 1818bd82c6a43954a9cadcd7e35ccb21, type: 3}
-  - {fileID: 8300000, guid: b2556c8d80ccc984ebb61d5352bc33d1, type: 3}
-  - {fileID: 8300000, guid: 207c2018a60e31a498869f5e41c1dac7, type: 3}
-  - {fileID: 8300000, guid: f64a92ef8403c6d4fb44ef7886df6505, type: 3}
+  - {fileID: 8300000, guid: 3d3e0ad89f6cf094ca70f9b94fc8ae9e, type: 3}
+  - {fileID: 8300000, guid: 655d94d61e3b2cd428ace23a7fa19d9c, type: 3}
+  - {fileID: 8300000, guid: e849e1a811460eb4eb660fd0981e8d73, type: 3}
+  - {fileID: 8300000, guid: c4340a66eadf89a4ea3610d25a4b1bd2, type: 3}
   sceneChanger: {fileID: 1048328454}
-  damageSound: {fileID: 8300000, guid: 9c7dbb76faf1fdb14bbc7e5128182bab, type: 3}
+  playerDamageSound: {fileID: 8300000, guid: c2569fedee34a894aa55b6b809101bc9, type: 3}
+  enemyDamageSound: {fileID: 8300000, guid: 517dff0f66d25f64a92af8d4555590a1, type: 3}
   victoryDescription: {fileID: 8300000, guid: 4d52870946c482245bfaea5e98e40847, type: 3}
   defeatDescription: {fileID: 8300000, guid: fc7c9fb04e34b9b459e4fa7ba649b734, type: 3}
 --- !u!4 &1888468738

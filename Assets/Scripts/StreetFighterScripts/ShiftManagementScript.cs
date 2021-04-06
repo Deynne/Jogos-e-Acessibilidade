@@ -46,7 +46,7 @@ public class ShiftManagementScript : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        UIText.text = "Player, inicie a batalha!";
+        UIText.text = "Inicie a batalha! Faça o primeiro movimento!";
         textPlayer.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce_tem"),
                                   Resources.Load<AudioClip>(TextPlayer.SONS_NUMEROS + "3"),
                                   Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/pontos_de_vida"));
