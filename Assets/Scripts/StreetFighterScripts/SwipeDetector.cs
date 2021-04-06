@@ -25,6 +25,9 @@ public class SwipeDetector : MonoBehaviour
     }
 
     private void Update() {
+        if(ShiftManagementScript.state == BattleState.START) {
+            return;
+        }
         //Descomentar o próximo if quando a IA estiver implementada
         if(ShiftManagementScript.state == BattleState.PLAYERTURN)
             CheckSwipe();

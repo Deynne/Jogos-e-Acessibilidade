@@ -508,7 +508,7 @@ MonoBehaviour:
   enemyButton: {fileID: 1631579575}
   playerBattleStation: {fileID: 2064107325}
   enemyBattleStation: {fileID: 1255069745}
-  textPlayer: {fileID: 0}
+  textPlayer: {fileID: 881062160}
   UIText: {fileID: 272643591}
 --- !u!4 &419783012
 Transform:
@@ -1287,6 +1287,8 @@ MonoBehaviour:
   damageSound: {fileID: 8300000, guid: 9c7dbb76faf1fdb14bbc7e5128182bab, type: 3}
   victoryDescription: {fileID: 8300000, guid: 4d52870946c482245bfaea5e98e40847, type: 3}
   defeatDescription: {fileID: 8300000, guid: fc7c9fb04e34b9b459e4fa7ba649b734, type: 3}
+  soundsList:
+    SoundNames: []
 --- !u!4 &1888468738
 Transform:
   m_ObjectHideFlags: 0

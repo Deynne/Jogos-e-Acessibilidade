@@ -1,0 +1,52 @@
+{
+    "SoundNames" : [
+        {
+            "soundName": "dano_recebido"
+        },
+        {
+            "soundName": "faca_um_movimento_novo"
+        },
+        {
+            "soundName": "ganhou_a_rodada"
+        },
+        {
+            "soundName": "perdeu_a_rodada"
+        },
+        {
+            "soundName": "ponto_de_vida"
+        },
+        {
+            "soundName": "pontos_de_vida"
+        },
+        {
+            "soundName": "rodada"
+        },
+        {
+            "soundName": "seu_adversario_tem"
+        },
+        {
+            "soundName": "voce_tem"
+        },
+        {
+            "soundName": "voce"
+        },
+        {
+            "soundName": "seu_adversário"
+        },
+        {
+            "soundName": "parabens"
+        },
+        {
+            "soundName": "venceu_a_luta"
+        },
+        {
+            "soundName": "perdeu_a_luta"
+        },
+        {
+            "soundName": "tente_novamente"
+        },
+        {
+            "soundName": "recebeu_dano"
+        }
+    ]
+}

@@ -6,9 +6,18 @@ using System;
 
 public enum Move {UP, DOWN, LEFT, RIGHT}
 public class Fighter {
+    #pragma warning disable CS0649
+    public bool player;
     public int games = 0;
     public int hP = 0;
+
+    public Fighter(bool _player, int _hP) {
+        player = _player;
+        hP = _hP;
+    }
 }
+
+
 public class FightManager : MonoBehaviour
 {
     //Esta classe inicializa duas listas, uma para os movimentos recorrentes da luta, e outra que abriga os temporários do jogador atual
@@ -31,9 +40,10 @@ public class FightManager : MonoBehaviour
     [SerializeField] private AudioClip victoryDescription;
     [SerializeField] private AudioClip defeatDescription;
     #pragma warning restore CS0649
+    public SoundString soundsList;
     private AudioSource left,right;
-    public Fighter playerFighter = new Fighter();
-    public Fighter enemyFighter = new Fighter();
+    public Fighter playerFighter;
+    public Fighter enemyFighter;
 
 
     //No início, os HP dos lutadores são determinados
@@ -51,17 +61,24 @@ public class FightManager : MonoBehaviour
                 right = a;
             }
         }
-        playerFighter.hP = hpInicial;
-        enemyFighter.hP = hpInicial;
+
+        TextAsset jsn = Resources.Load(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/SequenciaDeCombateDescriptionsIndex") as TextAsset;
+        if(jsn != null) {
+            soundsList = JsonUtility.FromJson<SoundString>(jsn.text);
+            Debug.Log(jsn.text);
+        } else {
+            Debug.LogError("Texto não encontrado.");
+        }
+
+        playerFighter = new Fighter(true,hpInicial);
+        enemyFighter = new Fighter(false,hpInicial);
+
+        shiftManagementScript.PlayDescriptionHP(playerFighter,enemyFighter);
+        
         UpdateUI();
     }
     //O método PerformMove adiciona golpes à respectiva lista dos golpes
     public void PerformMove (Move newMove) {
-
-        //Checando o início do jogo
-        if(ShiftManagementScript.state == BattleState.START) {
-            return;
-        }
 
         //Caso a lista temporária seja menor do que a final, adiciona o próximo golpe à temporária
         //e é checado se a sequência atual é correta.
@@ -134,6 +151,8 @@ public class FightManager : MonoBehaviour
             enemyFighter.hP--;
         }
         UpdateUI();
+
+        shiftManagementScript.textPlayer.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/dano_recebido"));
 
         //As listas são reinicializadas
         fightMoves = new List<Move>();
