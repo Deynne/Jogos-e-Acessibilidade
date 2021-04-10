@@ -27,10 +27,18 @@ public class SwipeDetector : MonoBehaviour
     private void Update() {
         if(ShiftManagementScript.state == BattleState.START) {
             return;
+        } else if (ShiftManagementScript.state == BattleState.END) {
+            return;
+        }
+
+        if(fightManagerScript.suspendMoveCalculation) {
+            return;
         }
         //Descomentar o próximo if quando a IA estiver implementada
         if(ShiftManagementScript.state == BattleState.PLAYERTURN)
             CheckSwipe();
+
+    
     }
 
     public void CheckSwipe() {
@@ -58,13 +66,13 @@ public class SwipeDetector : MonoBehaviour
 
                     //CHAMAR AQUI COMANDOS PARA SWIPE ESQUERDO
                     //Debug.LogWarning("ESQUERDA");
-                    fightManagerScript.PerformMove(Move.LEFT);
+                    StartCoroutine(fightManagerScript.PerformMove(Move.LEFT));
 
                 } else if(difX > swipeOffset) {
 
                     //CHAMAR AQUI COMANDOS PARA SWIPE DIREITO
                     //Debug.LogWarning("DIREITA");
-                    fightManagerScript.PerformMove(Move.RIGHT);
+                    StartCoroutine(fightManagerScript.PerformMove(Move.RIGHT));
                 }
             } else {
                 //Aqui checa-se se difY é positivo ou negativo
@@ -72,12 +80,12 @@ public class SwipeDetector : MonoBehaviour
 
                     //CHAMAR AQUI COMANDOS PARA SWIPE PARA BAIXO
                     //Debug.LogWarning("BAIXO");
-                    fightManagerScript.PerformMove(Move.DOWN);
+                    StartCoroutine(fightManagerScript.PerformMove(Move.DOWN));
 
                 } else if(difY > swipeOffset) {
                     //CHAMAR AQUI COMANDOS PARA SWIPE PARA CIMA
                     //Debug.LogWarning("CIMA");
-                    fightManagerScript.PerformMove(Move.UP);
+                    StartCoroutine(fightManagerScript.PerformMove(Move.UP));
                 }
             }
         }

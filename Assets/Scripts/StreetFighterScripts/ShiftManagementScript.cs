@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 // Estados possíveis da batalha
 // Lembrar de adicionar WIN e LOST depois
-public enum BattleState { START, PLAYERTURN, ENEMYTURN }
+public enum BattleState { START, PLAYERTURN, ENEMYTURN, PERFORMING, END }
 
 public class ShiftManagementScript : MonoBehaviour
 {
@@ -17,8 +17,6 @@ public class ShiftManagementScript : MonoBehaviour
     
     public Transform playerBattleStation;
     public Transform enemyBattleStation;
-
-    public TextPlayer textPlayer;
 
     //Variável colocada como static para acesso mais fácil por outros scripts
     public static BattleState state;
@@ -44,14 +42,14 @@ public class ShiftManagementScript : MonoBehaviour
         GameObject enemyGO = Instantiate(enemyPrefab, enemyBattleStation);
         enemyGO.transform.localPosition = new Vector3(0,5,1);        
 
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(2f);
 
-        UIText.text = "Player, inicie a batalha!";
-        
+        UIText.text = "Inicie a batalha! Faça o primeiro movimento!";
+        TextPlayer.instance.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/inicie_a_batalha"));
 
         // Muda o estado da batalha pra que o player inicie e chama o manipulador de players
         state = BattleState.PLAYERTURN;
-        StartCoroutine(ManageBattle());
+        ManageBattle();
         
     }
 
@@ -64,7 +62,7 @@ public class ShiftManagementScript : MonoBehaviour
          */        
         //UIText.text = "Player acabou de jogar, vez do inimigo!";        
         state = BattleState.ENEMYTURN;
-        StartCoroutine(ManageBattle());
+        ManageBattle();
     }
 
     void EnemyDoesSomething()
@@ -76,18 +74,16 @@ public class ShiftManagementScript : MonoBehaviour
          */
         //UIText.text = "Inimigo acabou de jogar, vez do player!";
         state = BattleState.PLAYERTURN;
-        StartCoroutine(ManageBattle());
+        ManageBattle();
     }
 
-    public IEnumerator ManageBattle()
+    public void ManageBattle()
     {
-        yield return new WaitForSeconds(1);
         /*
          A troca de estados é essencial pra que a mecânica de turnos funcione.
          Assim que o ManageBattle é chamado, o estado está em player.
          */                 
         if (state == BattleState.PLAYERTURN) {
-            textPlayer.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/faca_um_movimento_novo"));
             // Clicar no botão de player permite que ele faça algo
             playerButton.onClick.AddListener(PlayerDoesSomething);
             }
@@ -97,28 +93,6 @@ public class ShiftManagementScript : MonoBehaviour
             enemyButton.onClick.AddListener(EnemyDoesSomething);
         }
         // Adicionar estado de finalização da batalha
-    }
-
-    public void PlayDescriptionHP(Fighter fighter) {
-        if(fighter.player) {
-            textPlayer.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce_tem"),
-                                  Resources.Load<AudioClip>(TextPlayer.SONS_NUMEROS + fighter.hP.ToString()),
-                                  Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/pontos_de_vida"));
-        } else {
-            textPlayer.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/seu_adversario_tem"),
-                                  Resources.Load<AudioClip>(TextPlayer.SONS_NUMEROS + fighter.hP.ToString()),
-                                  Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/pontos_de_vida"));
-        }
-    }
-
-    public void PlayDescriptionHP(Fighter playerFighter, Fighter enemyFighter) {
-        textPlayer.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce_tem"),
-                                  Resources.Load<AudioClip>(TextPlayer.SONS_NUMEROS + playerFighter.hP.ToString()),
-                                  Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/pontos_de_vida"),
-                                  Resources.Load<AudioClip>(TextPlayer.SONS_GENERICOS + "e"),
-                                  Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/seu_adversario_tem"),
-                                  Resources.Load<AudioClip>(TextPlayer.SONS_NUMEROS + enemyFighter.hP.ToString()),
-                                  Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/pontos_de_vida"));
     }
 
 }

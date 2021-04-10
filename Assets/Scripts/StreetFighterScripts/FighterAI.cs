@@ -17,7 +17,6 @@ public class FighterAI : MonoBehaviour
     private bool enableCoroutine = true;
     [SerializeField] private FightManager fightManagerScript;
     
-    
     void Awake()
     {
         hitChance = inicialHitChance;
@@ -40,11 +39,14 @@ public class FighterAI : MonoBehaviour
             enableCoroutine = false;
         }
 
+        if(ShiftManagementScript.state == BattleState.END) {
+            StopAllCoroutines();
+        }
+
     }
 
     //Este método aplica a chance de acerto para acerto ou erro do golpe
     public void CalculateMove() {
-
         Move toPerform = new Move();
         Move nextValid = new Move();
 
@@ -75,7 +77,7 @@ public class FighterAI : MonoBehaviour
         }
 
     //O golpe é executado e a chance de acertar o próximo diminui de acordo com "decreaseChanceByMove"
-        fightManagerScript.PerformMove(toPerform);
+        StartCoroutine(fightManagerScript.PerformMove(toPerform));
         hitChance -= decreaseChanceByMove;
 
         if(fightManagerScript.fightMoves.Count == 0) {
@@ -88,8 +90,13 @@ public class FighterAI : MonoBehaviour
         yield return new WaitForSeconds(turnWaitTime);
         while(ShiftManagementScript.state == BattleState.ENEMYTURN) {
             yield return new WaitForSeconds(moveWaitTime);
-            CalculateMove();
+            if(!fightManagerScript.suspendMoveCalculation)
+                CalculateMove();
         }
         enableCoroutine = true;
+    }
+
+    public void RefreshEnemyHitChance() {
+        hitChance = inicialHitChance;
     }
 }

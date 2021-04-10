@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 
-public class TextPlayer : MonoBehaviour {
+public class TextPlayer : Singleton<TextPlayer> {
 
     private AudioSource left,right;
 
@@ -38,6 +38,21 @@ public class TextPlayer : MonoBehaviour {
         }
     }
 
+    public bool SourcesPlaying() {
+        if(left.isPlaying || right.isPlaying) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public void PlayOnce(AudioClip audio) {
+        if (left.isPlaying || right.isPlaying) {
+            left.Stop();
+            right.Stop();
+        }
+        left.PlayOneShot(audio);
+        right.PlayOneShot(audio);
+    }
     public void playInSequence(params AudioClip [] clips)
     {
         StartCoroutine(playAudioSequentially(clips));
@@ -45,6 +60,10 @@ public class TextPlayer : MonoBehaviour {
 
     IEnumerator playAudioSequentially(params AudioClip [] clips)
     {
+        if (left.isPlaying || right.isPlaying) {
+            left.Stop();
+            right.Stop();
+        }
         yield return null;
 
         //1.Loop through each AudioClip
