@@ -23,6 +23,7 @@ public class FightManager : MonoBehaviour
     //Esta classe inicializa duas listas, uma para os movimentos recorrentes da luta, e outra que abriga os temporários do jogador atual
     public int hpInicial = 3;
     public int gamesToWin = 2;
+    int rodadaAtual = 1;
     public List<Move> fightMoves = new List<Move>();
     public List<Move> tempMoves = new List<Move>();
     #pragma warning disable CS0649
@@ -79,6 +80,12 @@ public class FightManager : MonoBehaviour
     //O método PerformMove adiciona golpes à respectiva lista dos golpes
     public IEnumerator PerformMove (Move newMove) {
         
+        if(ShiftManagementScript.state == BattleState.PLAYERTURN) {
+            inputText.text = "Seu turno.";
+        } else if (ShiftManagementScript.state == BattleState.ENEMYTURN) {
+            inputText.text = "Turno do inimigo";
+        }
+
         AudioClip audioToPlay = null;
         //Caso a lista temporária seja menor do que a final, adiciona o próximo golpe à temporária
         //e é checado se a sequência atual é correta.
@@ -121,12 +128,14 @@ public class FightManager : MonoBehaviour
         audioToPlay = punchSounds[(int)newMove];
         TextPlayer.instance.playInSequence(audioToPlay);
         yield return new WaitForSeconds(audioToPlay.length + 0.1f);
+        lastMove.text = "";
         tempMoves = new List<Move>();
 
         if(ShiftManagementScript.state == BattleState.ENEMYTURN) {
             suspendMoveCalculation = true;
             shiftManagementScript.enemyButton.onClick.Invoke();
             audioToPlay = Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/seu_inimigo_encerrou_seu_turno");
+            inputText.text = "Seu inimigo encerrou seu turno. Agora é a sua vez!";
             TextPlayer.instance.playInSequence(audioToPlay);
             yield return new WaitForSeconds(audioToPlay.length);
             suspendMoveCalculation = false;
@@ -138,11 +147,12 @@ public class FightManager : MonoBehaviour
             suspendMoveCalculation = true;
             shiftManagementScript.playerButton.onClick.Invoke();
             audioToPlay = Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/seu_turno_acabou");
+            inputText.text = "Seu turno acabou. Agora é a vez do inimigo.";
             TextPlayer.instance.playInSequence(audioToPlay);
             yield return new WaitForSeconds(audioToPlay.length);
             suspendMoveCalculation = false;
         }
-
+        
         
     }
 
@@ -222,17 +232,34 @@ public class FightManager : MonoBehaviour
 
     }
 
+    public IEnumerator PlayGameStatus() {
+        suspendMoveCalculation = true;
+        TextPlayer.instance.playInSequence  (Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/rodada"),
+                                            Resources.Load<AudioClip>(TextPlayer.SONS_NUMEROS + rodadaAtual.ToString()));
+        inputText.text = "Rodada" + rodadaAtual.ToString();
+        
+        yield return new WaitForSeconds(2f);
+        PlayHPCounter(playerFighter);
+        yield return new WaitForSeconds(3f);
+        PlayHPCounter(enemyFighter);
+        suspendMoveCalculation = false;
+    }
+
     //No fim do jogo, o texto da UI é atualizado com a mensagem de vitória ou derrota
     //Além disso, o game do lutador respectivo é contabilizado e as vidas são reiniciadas
     private IEnumerator EndRound() {
+        rodadaAtual++;
+        suspendMoveCalculation = true;
         if(playerFighter.hP > 0) {
             playerFighter.games++;
             lastMove.text = "Round ganho";
+            inputText.text = "Você ganhou a rodada!";
             TextPlayer.instance.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce"),
                                             Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/ganhou_a_rodada"));
         } else {
             enemyFighter.games++;
             lastMove.text = "Round perdido";
+            inputText.text = "Você perdeu a rodada.";
             TextPlayer.instance.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce"),
                                             Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/perdeu_a_rodada"));
         }
@@ -245,6 +272,16 @@ public class FightManager : MonoBehaviour
             yield break;
         }
         
+        TextPlayer.instance.playInSequence  (Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/rodada"),
+                                            Resources.Load<AudioClip>(TextPlayer.SONS_NUMEROS + rodadaAtual.ToString()));
+        yield return new WaitForSeconds(2f);
+        
+
+        if(ShiftManagementScript.state == BattleState.PLAYERTURN) {
+            yield return new WaitForSeconds(2f);
+            TextPlayer.instance.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/faca_um_movimento_novo"));
+        }
+        
         playerFighter.hP = hpInicial;
         enemyFighter.hP = hpInicial;
         UpdateUI();
@@ -255,12 +292,14 @@ public class FightManager : MonoBehaviour
         ShiftManagementScript.state = BattleState.END;
         AudioClip description = null;
         if(playerFighter.games == gamesToWin) {
-            lastMove.text = "Você ganhou a luta! :DDDD";
+            lastMove.text = ":DDDD";
+            inputText.text = "Você ganhou a luta! Parabéns!!!";
             // yield return new WaitForSeconds(1);
             // sceneChanger.LoadGame("_StreetFighter");
             description = victoryDescription;
         } else if(enemyFighter.games == gamesToWin) {
-            lastMove.text = "Você perdeu a luta! :(";
+            lastMove.text = ":'(";
+            inputText.text = "Você perdeu a luta. Mais sorte da próxima vez...";
             description = defeatDescription;            
             // yield return new WaitForSeconds(3);
             // sceneChanger.LoadGame("_StreetFighter");

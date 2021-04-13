@@ -45,6 +45,11 @@ public class TextPlayer : Singleton<TextPlayer> {
             return false;
         }
     }
+
+    public void StopAudio() {
+        left.Stop();
+        right.Stop();
+    }
     public void PlayOnce(AudioClip audio) {
         if (left.isPlaying || right.isPlaying) {
             left.Stop();

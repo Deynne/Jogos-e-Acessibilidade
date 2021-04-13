@@ -31,14 +31,35 @@ public class SwipeDetector : MonoBehaviour
             return;
         }
 
+        CheckTap();
+
         if(fightManagerScript.suspendMoveCalculation) {
             return;
         }
-        //Descomentar o próximo if quando a IA estiver implementada
-        if(ShiftManagementScript.state == BattleState.PLAYERTURN)
-            CheckSwipe();
 
+        
+        //Descomentar o próximo if quando a IA estiver implementada
+        if(ShiftManagementScript.state == BattleState.PLAYERTURN)   
+        {
+            CheckSwipe();
+        } 
+
+        
     
+    }
+
+    public void CheckTap() {
+        if(Touch.activeFingers.Count == 1) {
+            Touch activeTouch = Touch.activeFingers[0].currentTouch;
+
+            if(activeTouch.isTap) {
+                if(TextPlayer.instance.SourcesPlaying()) {
+                    TextPlayer.instance.StopAudio();
+                } else if(ShiftManagementScript.state == BattleState.PLAYERTURN) {
+                    StartCoroutine(fightManagerScript.PlayGameStatus());
+                }
+            }
+        }
     }
 
     public void CheckSwipe() {
