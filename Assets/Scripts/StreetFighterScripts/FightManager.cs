@@ -47,6 +47,7 @@ public class FightManager : MonoBehaviour
     public Fighter enemyFighter;
     public bool suspendMoveCalculation = false;
 
+    private AudioClip audioToPlay = null;
 
     //No início, os HP dos lutadores são determinados
     private void Start() {        
@@ -86,7 +87,7 @@ public class FightManager : MonoBehaviour
             inputText.text = "Turno do inimigo";
         }
 
-        AudioClip audioToPlay = null;
+        
         //Caso a lista temporária seja menor do que a final, adiciona o próximo golpe à temporária
         //e é checado se a sequência atual é correta.
         
@@ -101,7 +102,7 @@ public class FightManager : MonoBehaviour
 
             //Caso a sequência não esteja correta, o personagem leva dano
             if(!RightSequence()) {
-                lastMove.text = "Dano recebido!";
+                lastMove.text = ShiftManagementScript.state == BattleState.PLAYERTURN?"Dano recebido!":"Você Acertou!";
                 StartCoroutine(TakeDamage());
             }
             else if (tempMoves.Count == fightMoves.Count && ShiftManagementScript.state== BattleState.PLAYERTURN) {
@@ -178,7 +179,7 @@ public class FightManager : MonoBehaviour
         } else if(ShiftManagementScript.state == BattleState.ENEMYTURN) {
             enemyFighter.hP--;
             TextPlayer.instance.playInSequence  (enemyDamageSound,
-                                                Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/dano_recebido"));
+                                                Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce_acertou"));
         }
         UpdateUI();
         yield return new WaitForSeconds(2f);
@@ -202,6 +203,10 @@ public class FightManager : MonoBehaviour
 
         if(ShiftManagementScript.state == BattleState.PLAYERTURN) {
             TextPlayer.instance.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/faca_um_movimento_novo"));
+            yield return new WaitForSeconds(2f);
+        }else if(ShiftManagementScript.state == BattleState.ENEMYTURN) {
+            TextPlayer.instance.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/seu_adversario_iniciara_nova_rodada"));
+            yield return new WaitForSeconds(3f);
         }
         yield return new WaitForSeconds(2f);
         suspendMoveCalculation = false;
@@ -236,12 +241,15 @@ public class FightManager : MonoBehaviour
         suspendMoveCalculation = true;
         TextPlayer.instance.playInSequence  (Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/rodada"),
                                             Resources.Load<AudioClip>(TextPlayer.SONS_NUMEROS + rodadaAtual.ToString()));
-        inputText.text = "Rodada" + rodadaAtual.ToString();
+        string previousText = inputText.text;
+        inputText.text = "Rodada " + rodadaAtual.ToString();
         
         yield return new WaitForSeconds(2f);
+        inputText.text = previousText;
         PlayHPCounter(playerFighter);
         yield return new WaitForSeconds(3f);
         PlayHPCounter(enemyFighter);
+        // TextPlayer.instance.playInSequence(audioToPlay);
         suspendMoveCalculation = false;
     }
 
@@ -307,7 +315,7 @@ public class FightManager : MonoBehaviour
         }
         TextPlayer.instance.playInSequence(description);
         yield return new WaitForSeconds(description.length);       
-        sceneChanger.LoadGame("_Sequencia_de_combate");
+        sceneChanger.LoadGame("_SequenciaDeCombate");
 
         yield return null;
     }

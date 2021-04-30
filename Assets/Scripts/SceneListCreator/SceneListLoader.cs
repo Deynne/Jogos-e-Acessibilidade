@@ -9,15 +9,29 @@ public class SceneListLoader : MonoBehaviour
     // Uma função para carregar a lista
     public static SceneDataList LoadSceneList() {
         string path = Application.streamingAssetsPath + "/" + SceneListWriter.jsonName;
-        string json;
+        string json = null;
+        Debug.Log(path);
         if (Application.platform == RuntimePlatform.Android || true) {
-            UnityWebRequest reader = new UnityWebRequest(path);
+            UnityWebRequest reader = UnityWebRequest.Get(path);
             
             reader.SendWebRequest();
 
-            while (!reader.isDone) { }
-     
-            json = reader.downloadHandler.text;
+            while (!reader.isDone) {
+                if (reader.isNetworkError || reader.isHttpError) {
+                    Debug.Log("net" + reader.isNetworkError);
+                    Debug.Log("http" + reader.isHttpError);
+                    break;
+                }
+             }
+            Debug.Log(reader.downloadHandler);
+            if(!(reader.isNetworkError && reader.isHttpError)) {
+                Debug.Log("Entrou no jsonReader");
+                json = reader.downloadHandler.text;
+            }
+            else {
+                Debug.Log("net" + reader.isNetworkError);
+                Debug.Log("http" + reader.isHttpError);
+            }
         }
         else{
             using(StreamReader sr = new StreamReader(path)) {
