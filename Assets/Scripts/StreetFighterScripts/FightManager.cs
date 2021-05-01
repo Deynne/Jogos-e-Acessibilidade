@@ -108,13 +108,13 @@ public class FightManager : MonoBehaviour
             else if (tempMoves.Count == fightMoves.Count && ShiftManagementScript.state== BattleState.PLAYERTURN) {
                 audioToPlay = punchSounds[(int)newMove];
                 TextPlayer.instance.playInSequence(audioToPlay);
-                yield return new WaitForSeconds(audioToPlay.length);
+                while(TextPlayer.instance.SourcesPlaying()) yield return null;
                 
                 inputText.text = "Faça um movimento novo!";
                 audioToPlay = Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/faca_um_movimento_novo");
                 
                 TextPlayer.instance.playInSequence(audioToPlay);
-                yield return new WaitForSeconds(audioToPlay.length);                
+                while(TextPlayer.instance.SourcesPlaying()) yield return null;                
             }
             else {
                 TextPlayer.instance.playInSequence(punchSounds[(int)newMove]);
@@ -128,7 +128,7 @@ public class FightManager : MonoBehaviour
         //O áudio do golpe é tocado uma vez
         audioToPlay = punchSounds[(int)newMove];
         TextPlayer.instance.playInSequence(audioToPlay);
-        yield return new WaitForSeconds(audioToPlay.length + 0.1f);
+        while(TextPlayer.instance.SourcesPlaying()) yield return null;
         lastMove.text = "";
         tempMoves = new List<Move>();
 
@@ -138,7 +138,7 @@ public class FightManager : MonoBehaviour
             audioToPlay = Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/seu_inimigo_encerrou_seu_turno");
             inputText.text = "Seu inimigo encerrou seu turno. Agora é a sua vez!";
             TextPlayer.instance.playInSequence(audioToPlay);
-            yield return new WaitForSeconds(audioToPlay.length);
+            while(TextPlayer.instance.SourcesPlaying()) yield return null;
             suspendMoveCalculation = false;
             //Caso o turno seja do jogador, invoca-se o botão de mudança de turno para o inimigo
             
@@ -150,7 +150,7 @@ public class FightManager : MonoBehaviour
             audioToPlay = Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/seu_turno_acabou");
             inputText.text = "Seu turno acabou. Agora é a vez do inimigo.";
             TextPlayer.instance.playInSequence(audioToPlay);
-            yield return new WaitForSeconds(audioToPlay.length);
+            while(TextPlayer.instance.SourcesPlaying()) yield return null;
             suspendMoveCalculation = false;
         }
         
@@ -174,19 +174,19 @@ public class FightManager : MonoBehaviour
         //Audio de dano toca.
         if(ShiftManagementScript.state == BattleState.PLAYERTURN) {
             playerFighter.hP--;
-            TextPlayer.instance.playInSequence  (playerDamageSound,
+            TextPlayer.instance.addToEndOfSequence  (playerDamageSound,
                                                 Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/dano_recebido"));
         } else if(ShiftManagementScript.state == BattleState.ENEMYTURN) {
             enemyFighter.hP--;
-            TextPlayer.instance.playInSequence  (enemyDamageSound,
+            TextPlayer.instance.addToEndOfSequence  (enemyDamageSound,
                                                 Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce_acertou"));
         }
         UpdateUI();
-        yield return new WaitForSeconds(2f);
+        // while(TextPlayer.instance.SourcesPlaying()) yield return null;
         PlayHPCounter(playerFighter);
-        yield return new WaitForSeconds(3f);
+        // while(TextPlayer.instance.SourcesPlaying()) yield return null;
         PlayHPCounter(enemyFighter);
-        yield return new WaitForSeconds(5f);
+        while(TextPlayer.instance.SourcesPlaying()) yield return null;
 
         //As listas são reinicializadas
         fightMoves = new List<Move>();
@@ -202,34 +202,34 @@ public class FightManager : MonoBehaviour
         }
 
         if(ShiftManagementScript.state == BattleState.PLAYERTURN) {
-            TextPlayer.instance.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/faca_um_movimento_novo"));
-            yield return new WaitForSeconds(2f);
+            TextPlayer.instance.addToEndOfSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/faca_um_movimento_novo"));
+            // while(TextPlayer.instance.SourcesPlaying()) yield return null;
         }else if(ShiftManagementScript.state == BattleState.ENEMYTURN) {
-            TextPlayer.instance.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/seu_adversario_iniciara_nova_rodada"));
-            yield return new WaitForSeconds(3f);
+            TextPlayer.instance.addToEndOfSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/seu_adversario_iniciara_nova_rodada"));
+            // while(TextPlayer.instance.SourcesPlaying()) yield return null;
         }
-        yield return new WaitForSeconds(2f);
+        while(TextPlayer.instance.SourcesPlaying()) yield return null;
         suspendMoveCalculation = false;
     }
 
     public void PlayHPCounter(Fighter fghtr) {
         if(fghtr.player) {
             if(fghtr.hP != 1) {
-                TextPlayer.instance.playInSequence  (   Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce_tem"),
+                TextPlayer.instance.addToEndOfSequence  (   Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce_tem"),
                                                         Resources.Load<AudioClip>(TextPlayer.SONS_NUMEROS + fghtr.hP),
                                                         Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/pontos_de_vida"));
             } else {
-                TextPlayer.instance.playInSequence  (   Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce_tem"),
+                TextPlayer.instance.addToEndOfSequence  (   Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce_tem"),
                                                         Resources.Load<AudioClip>(TextPlayer.SONS_NUMEROS + fghtr.hP),
                                                         Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/ponto_de_vida"));
             }
         } else {
             if(fghtr.hP != 1) {
-                TextPlayer.instance.playInSequence  (   Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/seu_adversario_tem"),
+                TextPlayer.instance.addToEndOfSequence  (   Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/seu_adversario_tem"),
                                                         Resources.Load<AudioClip>(TextPlayer.SONS_NUMEROS + fghtr.hP),
                                                         Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/pontos_de_vida"));
             } else {
-                TextPlayer.instance.playInSequence  (   Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/seu_adversario_tem"),
+                TextPlayer.instance.addToEndOfSequence  (   Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/seu_adversario_tem"),
                                                         Resources.Load<AudioClip>(TextPlayer.SONS_NUMEROS + fghtr.hP),
                                                         Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/ponto_de_vida"));
             }
@@ -244,13 +244,23 @@ public class FightManager : MonoBehaviour
         string previousText = inputText.text;
         inputText.text = "Rodada " + rodadaAtual.ToString();
         
-        yield return new WaitForSeconds(2f);
-        inputText.text = previousText;
         PlayHPCounter(playerFighter);
-        yield return new WaitForSeconds(3f);
+        // while(TextPlayer.instance.SourcesPlaying()) yield return null;
         PlayHPCounter(enemyFighter);
-        // TextPlayer.instance.playInSequence(audioToPlay);
+        // TextPlayer.instance.addToEndOfSequence(audioToPlay);
+        
+        while(TextPlayer.instance.SourcesPlaying()) { 
+            // if(TextPlayer.instance.ForcedToStop) {
+            //     Debug.Log("Interrompido");
+            //     inputText.text = previousText;
+            //     suspendMoveCalculation = false;
+            //     yield break;
+            // }
+            yield return null;
+        }
+        inputText.text = previousText;
         suspendMoveCalculation = false;
+        yield break;
     }
 
     //No fim do jogo, o texto da UI é atualizado com a mensagem de vitória ou derrota
@@ -262,17 +272,17 @@ public class FightManager : MonoBehaviour
             playerFighter.games++;
             lastMove.text = "Round ganho";
             inputText.text = "Você ganhou a rodada!";
-            TextPlayer.instance.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce"),
+            TextPlayer.instance.addToEndOfSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce"),
                                             Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/ganhou_a_rodada"));
         } else {
             enemyFighter.games++;
             lastMove.text = "Round perdido";
             inputText.text = "Você perdeu a rodada.";
-            TextPlayer.instance.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce"),
+            TextPlayer.instance.addToEndOfSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce"),
                                             Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/perdeu_a_rodada"));
         }
 
-        yield return new WaitForSeconds(3f);
+        while(TextPlayer.instance.SourcesPlaying()) yield return null;
 
         if(playerFighter.games == gamesToWin || enemyFighter.games == gamesToWin) {
             StartCoroutine(EndGame());
@@ -280,14 +290,14 @@ public class FightManager : MonoBehaviour
             yield break;
         }
         
-        TextPlayer.instance.playInSequence  (Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/rodada"),
+        TextPlayer.instance.addToEndOfSequence  (Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/rodada"),
                                             Resources.Load<AudioClip>(TextPlayer.SONS_NUMEROS + rodadaAtual.ToString()));
-        yield return new WaitForSeconds(2f);
+        while(TextPlayer.instance.SourcesPlaying()) yield return null;
         
 
         if(ShiftManagementScript.state == BattleState.PLAYERTURN) {
-            yield return new WaitForSeconds(2f);
-            TextPlayer.instance.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/faca_um_movimento_novo"));
+            while(TextPlayer.instance.SourcesPlaying()) yield return null;
+            TextPlayer.instance.addToEndOfSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/faca_um_movimento_novo"));
         }
         
         playerFighter.hP = hpInicial;
@@ -313,11 +323,11 @@ public class FightManager : MonoBehaviour
             // sceneChanger.LoadGame("_StreetFighter");
 
         }
-        TextPlayer.instance.playInSequence(description);
-        yield return new WaitForSeconds(description.length);       
+        TextPlayer.instance.addToEndOfSequence(description);
+        while(TextPlayer.instance.SourcesPlaying()) yield return null;       
         sceneChanger.LoadGame("_SequenciaDeCombate");
 
-        yield return null;
+        yield break;
     }
 
     public void UpdateUI() {

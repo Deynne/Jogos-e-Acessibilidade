@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class TextPlayer : Singleton<TextPlayer> {
 
@@ -22,6 +23,14 @@ public class TextPlayer : Singleton<TextPlayer> {
 
     public static string SONS_GAMES  {get => _SONS_GAMES;}
 
+    private Coroutine corrotina;
+
+    private List<AudioClip> clipsToPlay;
+
+    private bool tocandoSequencia = false;
+
+    private bool _forcedToStop = false;
+    public bool ForcedToStop {get =>_forcedToStop;}
     private void Start() {        
         GameObject g = GameObject.Find("SoundHandler");
         Component [] audioDescriptions = g.GetComponentsInParent(typeof(AudioSource)) as Component[];
@@ -36,48 +45,63 @@ public class TextPlayer : Singleton<TextPlayer> {
                 right = a;
             }
         }
+
+        clipsToPlay = new List<AudioClip>();
+
     }
 
     public bool SourcesPlaying() {
-        if(left.isPlaying || right.isPlaying) {
-            return true;
-        } else {
-            return false;
-        }
+        return left.isPlaying || right.isPlaying || tocandoSequencia;
     }
 
     public void StopAudio() {
-        left.Stop();
-        right.Stop();
-    }
-    public void PlayOnce(AudioClip audio) {
-        if (left.isPlaying || right.isPlaying) {
+        _forcedToStop = true;
+        if(SourcesPlaying()) {
             left.Stop();
             right.Stop();
         }
-        left.PlayOneShot(audio);
-        right.PlayOneShot(audio);
+        if(corrotina != null) {
+            Debug.Log("Entrou aqui");
+            StopCoroutine(corrotina);
+            corrotina = null;
+            clipsToPlay.Clear();
+            tocandoSequencia = false;
+        }
     }
+    // public void PlayOnce(AudioClip audio) {
+    //     if(!tocandoSequencia) return;
+    //     if (left.isPlaying || right.isPlaying) {
+    //         left.Stop();
+    //         right.Stop();
+    //     }
+    //     left.PlayOneShot(audio);
+    //     right.PlayOneShot(audio);
+    // }
     public void playInSequence(params AudioClip [] clips)
     {
-        StartCoroutine(playAudioSequentially(clips));
+        StopAudio();
+        Debug.Log("passou por aqui");
+        clipsToPlay.AddRange(clips);
+        tocandoSequencia = true;
+        _forcedToStop = false;;
+        corrotina = StartCoroutine(playAudioSequentially());
     }
 
-    IEnumerator playAudioSequentially(params AudioClip [] clips)
+    IEnumerator playAudioSequentially()
     {
         if (left.isPlaying || right.isPlaying) {
             left.Stop();
             right.Stop();
         }
-        yield return null;
-
+        // yield return null;
+        
         //1.Loop through each AudioClip
-        for (int i = 0; i < clips.Length; i++)
+        while (clipsToPlay.Count != 0)
         {
-            Debug.Log(clips[i]);
+            // Debug.Log(clipsToPlay[i]);
             //2.Assign current AudioClip to audiosource
-            left.clip = clips[i];
-            right.clip = clips[i];
+            left.clip = clipsToPlay[0];
+            right.clip = clipsToPlay[0];
 
             //3.Play Audio
             left.Play();
@@ -86,14 +110,28 @@ public class TextPlayer : Singleton<TextPlayer> {
             //4.Wait for it to finish playing
             while (left.isPlaying)
             {
-                if(left.clip != clips[i])
-                    break;
+                // Se tocar algum audio fora do que está programado. Para toda a corrotina.
+                if(left.clip != clipsToPlay[0])
+                    yield break;
                 yield return null;
                 
             }
+            clipsToPlay.RemoveAt(0);
 
             yield return new WaitForSeconds(0.1f);   
             //5. Go back to #2 and play the next audio in the adClips array
         }
-    }    
+        tocandoSequencia = false;
+        yield break;
+    }
+
+
+    public void addToEndOfSequence(params AudioClip [] clips) {
+        if(SourcesPlaying()){
+            clipsToPlay.AddRange(clips);
+        }
+        else
+            playInSequence(clips);
+
+    }
 }

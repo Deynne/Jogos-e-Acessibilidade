@@ -45,7 +45,7 @@ public class ShiftManagementScript : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         UIText.text = "Inicie a batalha! Faça o primeiro movimento!";
-        TextPlayer.instance.playInSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/inicie_a_batalha"));
+        TextPlayer.instance.addToEndOfSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/inicie_a_batalha"));
 
         // Muda o estado da batalha pra que o player inicie e chama o manipulador de players
         state = BattleState.PLAYERTURN;

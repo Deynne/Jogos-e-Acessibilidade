@@ -125,6 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1542564250556904461}
   - component: {fileID: -5785553850396676446}
+  - component: {fileID: 5437638676447896354}
   m_Layer: 0
   m_Name: red_boxer
   m_TagString: Untagged
@@ -158,5 +159,19 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 20, y: 20, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5437638676447896354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542564250556904462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f454f526a1b6145f925b9d078eca9ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swipeOffset: 100
+  fightManagerScript: {fileID: 0}
