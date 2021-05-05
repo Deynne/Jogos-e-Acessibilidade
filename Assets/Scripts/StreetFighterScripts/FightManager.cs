@@ -49,12 +49,21 @@ public class FightManager : MonoBehaviour
 
     private AudioClip audioToPlay = null;
 
+    private Animator redAnimator;
+    private Animator blueAnimator;
+
     //No início, os HP dos lutadores são determinados
-    private void Start() {        
-        GameObject g = GameObject.Find("SoundHandler");
-        Component [] audioDescriptions = g.GetComponentsInParent(typeof(AudioSource)) as Component[];
-        if(audioDescriptions == null)
-            throw new NullReferenceException("O componente de reprodução de audio não foi encontrado no objeto " + gameObject.transform.parent + ".");
+    private void Start() {
+        GameObject g = GameObject.Find("red_boxer(Clone)");
+        Debug.Log(g);
+        redAnimator = g.GetComponentInChildren(typeof(Animator)) as Animator;
+        g = GameObject.Find("blue_boxer(Clone)");
+        Debug.Log(g);
+        blueAnimator = g.GetComponentInChildren(typeof(Animator)) as Animator;
+        // GameObject g = GameObject.Find("SoundHandler");
+        // Component [] audioDescriptions = g.GetComponentsInParent(typeof(AudioSource)) as Component[];
+        // if(audioDescriptions == null)
+        //     throw new NullReferenceException("O componente de reprodução de audio não foi encontrado no objeto " + gameObject.transform.parent + ".");
         /*AudioSource a;
         for (int i = 0; i < audioDescriptions.Length; i++) {
             a = audioDescriptions[i] as AudioSource;
@@ -80,14 +89,35 @@ public class FightManager : MonoBehaviour
     }
     //O método PerformMove adiciona golpes à respectiva lista dos golpes
     public IEnumerator PerformMove (Move newMove) {
-        
+        Animator a = null;
         if(ShiftManagementScript.state == BattleState.PLAYERTURN) {
             inputText.text = "Seu turno.";
+            a = redAnimator;
         } else if (ShiftManagementScript.state == BattleState.ENEMYTURN) {
             inputText.text = "Turno do inimigo";
+            a = blueAnimator;
         }
-
         
+        string s = "";
+        switch (newMove)
+        {
+            case Move.UP:
+                s = "punch_up";
+                break;
+            case Move.DOWN:
+                s = "punch_left";
+                break;
+            case Move.LEFT:
+                s = "block";
+                break;
+            case Move.RIGHT:
+                s = "punch_right";
+                break;
+        }
+        Debug.Log("AQUI Ó");
+        Debug.Log(newMove);
+        if(a != null)
+            a.SetTrigger(s);
         //Caso a lista temporária seja menor do que a final, adiciona o próximo golpe à temporária
         //e é checado se a sequência atual é correta.
         
@@ -173,10 +203,12 @@ public class FightManager : MonoBehaviour
         suspendMoveCalculation = true;
         //Audio de dano toca.
         if(ShiftManagementScript.state == BattleState.PLAYERTURN) {
+            redAnimator.SetTrigger("hurt");
             playerFighter.hP--;
             TextPlayer.instance.addToEndOfSequence  (playerDamageSound,
                                                 Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/dano_recebido"));
         } else if(ShiftManagementScript.state == BattleState.ENEMYTURN) {
+            blueAnimator.SetTrigger("hurt");
             enemyFighter.hP--;
             TextPlayer.instance.addToEndOfSequence  (enemyDamageSound,
                                                 Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce_acertou"));
@@ -267,14 +299,19 @@ public class FightManager : MonoBehaviour
     //Além disso, o game do lutador respectivo é contabilizado e as vidas são reiniciadas
     private IEnumerator EndRound() {
         rodadaAtual++;
+        Animator a;
         suspendMoveCalculation = true;
         if(playerFighter.hP > 0) {
+            a =blueAnimator;
+            a.SetTrigger("ko");
             playerFighter.games++;
             lastMove.text = "Round ganho";
             inputText.text = "Você ganhou a rodada!";
             TextPlayer.instance.addToEndOfSequence(Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/voce"),
                                             Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/ganhou_a_rodada"));
         } else {
+            a = redAnimator;
+            a.SetTrigger("ko");
             enemyFighter.games++;
             lastMove.text = "Round perdido";
             inputText.text = "Você perdeu a rodada.";
@@ -289,7 +326,8 @@ public class FightManager : MonoBehaviour
             UpdateUI();
             yield break;
         }
-        
+        a.SetTrigger("idle");
+
         TextPlayer.instance.addToEndOfSequence  (Resources.Load<AudioClip>(TextPlayer.SONS_GAMES + "SequenciaDeCombateDescriptions/rodada"),
                                             Resources.Load<AudioClip>(TextPlayer.SONS_NUMEROS + rodadaAtual.ToString()));
         while(TextPlayer.instance.SourcesPlaying()) yield return null;

@@ -61,7 +61,6 @@ public class TextPlayer : Singleton<TextPlayer> {
             right.Stop();
         }
         if(corrotina != null) {
-            Debug.Log("Entrou aqui");
             StopCoroutine(corrotina);
             corrotina = null;
             clipsToPlay.Clear();
@@ -80,7 +79,6 @@ public class TextPlayer : Singleton<TextPlayer> {
     public void playInSequence(params AudioClip [] clips)
     {
         StopAudio();
-        Debug.Log("passou por aqui");
         clipsToPlay.AddRange(clips);
         tocandoSequencia = true;
         _forcedToStop = false;;
