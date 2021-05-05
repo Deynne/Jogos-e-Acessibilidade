@@ -1389,18 +1389,8 @@ MonoBehaviour:
   enemyHP: {fileID: 419809014}
   lastMove: {fileID: 2019695932}
   inputText: {fileID: 272643591}
-  punchSounds:
-  - {fileID: 8300000, guid: 3d3e0ad89f6cf094ca70f9b94fc8ae9e, type: 3}
-  - {fileID: 8300000, guid: 655d94d61e3b2cd428ace23a7fa19d9c, type: 3}
-  - {fileID: 8300000, guid: e849e1a811460eb4eb660fd0981e8d73, type: 3}
-  - {fileID: 8300000, guid: c4340a66eadf89a4ea3610d25a4b1bd2, type: 3}
   sceneChanger: {fileID: 1048328454}
-  playerDamageSound: {fileID: 8300000, guid: c2569fedee34a894aa55b6b809101bc9, type: 3}
-  enemyDamageSound: {fileID: 8300000, guid: 517dff0f66d25f64a92af8d4555590a1, type: 3}
-  victoryDescription: {fileID: 8300000, guid: 4d52870946c482245bfaea5e98e40847, type: 3}
-  defeatDescription: {fileID: 8300000, guid: fc7c9fb04e34b9b459e4fa7ba649b734, type: 3}
-  soundsList:
-    SoundNames: []
+  listaSons: {fileID: 11400000, guid: 83feb1a83cde8ed45991bc4625d1f510, type: 2}
   suspendMoveCalculation: 0
 --- !u!4 &1888468738
 Transform:

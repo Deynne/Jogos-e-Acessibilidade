@@ -24,7 +24,7 @@ public class SwipeDetector : MonoBehaviour
         EnhancedTouchSupport.Disable();
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         if(ShiftManagementScript.state == BattleState.START) {
             return;
         } else if (ShiftManagementScript.state == BattleState.END) {
