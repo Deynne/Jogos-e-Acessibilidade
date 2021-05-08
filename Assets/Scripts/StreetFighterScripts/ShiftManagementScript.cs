@@ -28,7 +28,8 @@ public class ShiftManagementScript : MonoBehaviour
         // Instancia os botões 
         playerButton = playerButton.GetComponent<Button>();
         enemyButton = enemyButton.GetComponent<Button>();
-
+        playerButton.onClick.AddListener(PlayerDoesSomething);
+        enemyButton.onClick.AddListener(EnemyDoesSomething);
         // Inicia a batalha
         state = BattleState.START;
         StartCoroutine(SetUpBattle());
@@ -62,7 +63,7 @@ public class ShiftManagementScript : MonoBehaviour
          */        
         //UIText.text = "Player acabou de jogar, vez do inimigo!";        
         state = BattleState.ENEMYTURN;
-        ManageBattle();
+        // ManageBattle();
     }
 
     void EnemyDoesSomething()
@@ -74,7 +75,7 @@ public class ShiftManagementScript : MonoBehaviour
          */
         //UIText.text = "Inimigo acabou de jogar, vez do player!";
         state = BattleState.PLAYERTURN;
-        ManageBattle();
+        // ManageBattle();
     }
 
     public void ManageBattle()
@@ -85,12 +86,12 @@ public class ShiftManagementScript : MonoBehaviour
          */                 
         if (state == BattleState.PLAYERTURN) {
             // Clicar no botão de player permite que ele faça algo
-            playerButton.onClick.AddListener(PlayerDoesSomething);
+                // playerButton.onClick.Invoke();
             }
         else if (state == BattleState.ENEMYTURN) {
             // Aqui precisa-se adicionar um áudio de movimento do adversário.
             // Clicar no botão de imigo permite que ele faça algo
-            enemyButton.onClick.AddListener(EnemyDoesSomething);
+            // enemyButton.onClick.Invoke();
         }
         // Adicionar estado de finalização da batalha
     }

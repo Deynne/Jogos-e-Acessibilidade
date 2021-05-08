@@ -81,6 +81,7 @@ public class FightManager : MonoBehaviour
     }
     //O método PerformMove adiciona golpes à respectiva lista dos golpes
     public IEnumerator PerformMove (Move newMove) {
+        TextPlayer.instance.StopAudio();
         Animator a = null;
         if(ShiftManagementScript.state == BattleState.PLAYERTURN) {
             inputText.text = "Seu turno.";
@@ -208,10 +209,11 @@ public class FightManager : MonoBehaviour
                                                      listaSons.voceAcertou);
         }
         UpdateUI();
-        // while(TextPlayer.instance.SourcesPlaying()) yield return null;
-        PlayHPCounter(playerFighter);
-        // while(TextPlayer.instance.SourcesPlaying()) yield return null;
-        PlayHPCounter(enemyFighter);
+        if(!TextPlayer.instance.ForcedToStop) {// while(TextPlayer.instance.SourcesPlaying()) yield return null;
+            PlayHPCounter(playerFighter);
+            // while(TextPlayer.instance.SourcesPlaying()) yield return null;
+            PlayHPCounter(enemyFighter);
+        }
         while(TextPlayer.instance.SourcesPlaying()) yield return null;
 
         //As listas são reinicializadas
@@ -345,13 +347,15 @@ public class FightManager : MonoBehaviour
             tempClip = Resources.Load<AudioClip>(TextPlayer.SONS_NUMEROS + rodadaAtual.ToString());
             numberClipMap.Add(rodadaAtual.ToString(),tempClip);
         }
-        TextPlayer.instance.addToEndOfSequence  (listaSons.rodada, tempClip);
+        if(!TextPlayer.instance.ForcedToStop)
+            TextPlayer.instance.addToEndOfSequence  (listaSons.rodada, tempClip);
         while(TextPlayer.instance.SourcesPlaying()) yield return null;
         
 
         if(ShiftManagementScript.state == BattleState.PLAYERTURN) {
             while(TextPlayer.instance.SourcesPlaying()) yield return null;
-            TextPlayer.instance.addToEndOfSequence(listaSons.facaUmMovimentoNovo);
+            if(!TextPlayer.instance.ForcedToStop)
+                TextPlayer.instance.addToEndOfSequence(listaSons.facaUmMovimentoNovo);
         }
         
         playerFighter.hP = hpInicial;
