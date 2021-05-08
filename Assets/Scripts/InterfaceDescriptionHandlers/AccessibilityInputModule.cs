@@ -496,7 +496,6 @@ namespace UnityEngine.EventSystems
                         ExecuteEvents.Execute(pointerEvent.pointerPress, pointerEvent, ExecuteEvents.pointerClickHandler);
                     else if(input.touchCount == 1) {
                         float diff = m_LastMousePosition.x - m_MousePosition.x;
-                        Debug.Log(diff);
                         swipe = false;
                         if(diff < -1 && !interactableList.isEmpty) {
                             swipe = true;

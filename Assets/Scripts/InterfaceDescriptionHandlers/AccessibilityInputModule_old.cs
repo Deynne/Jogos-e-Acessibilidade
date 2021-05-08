@@ -458,7 +458,6 @@ namespace UnityEngine.EventSystems {
             // interactableList.ClearList();
             //interactableList.FindInteractables();
             if(!interactableList.isEmpty) {
-                Debug.Log(interactableList.focusedGo);
                 eventSystem.SetSelectedGameObject(interactableList.focusedGo);
                 DescriptionPlayer dp = interactableList.focusedGo.GetComponent(typeof(DescriptionPlayer)) as DescriptionPlayer;
                 dp.OnDescriptorPress(null);

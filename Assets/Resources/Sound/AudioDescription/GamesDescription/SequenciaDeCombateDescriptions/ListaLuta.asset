@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b3d6b085d0ea9b43bb96c9d0648a210, type: 3}
+  m_Name: ListaLuta
+  m_EditorClassIdentifier: 
+  punchSounds:
+  - {fileID: 8300000, guid: 3d3e0ad89f6cf094ca70f9b94fc8ae9e, type: 3}
+  - {fileID: 8300000, guid: 655d94d61e3b2cd428ace23a7fa19d9c, type: 3}
+  - {fileID: 8300000, guid: e849e1a811460eb4eb660fd0981e8d73, type: 3}
+  - {fileID: 8300000, guid: c4340a66eadf89a4ea3610d25a4b1bd2, type: 3}
+  playerDamageSound: {fileID: 8300000, guid: c2569fedee34a894aa55b6b809101bc9, type: 3}
+  enemyDamageSound: {fileID: 8300000, guid: 517dff0f66d25f64a92af8d4555590a1, type: 3}
+  victoryDescription: {fileID: 8300000, guid: 4d52870946c482245bfaea5e98e40847, type: 3}
+  defeatDescription: {fileID: 8300000, guid: fc7c9fb04e34b9b459e4fa7ba649b734, type: 3}
+  danoRecebido: {fileID: 8300000, guid: a03a51f9758224343ac6d240fc1f6a10, type: 3}
+  facaUmMovimentoNovo: {fileID: 8300000, guid: af3ef58df9692d0419dc026e658c387b, type: 3}
+  ganhouARodada: {fileID: 8300000, guid: 472c842fb09693c49a61cab1cc186d9a, type: 3}
+  inicieABatalha: {fileID: 8300000, guid: f4a606c09765a8649bdff0c53621e204, type: 3}
+  inicieNovaRodada: {fileID: 8300000, guid: b571d4c8add85574ea8e28e0f2f0271e, type: 3}
+  perdeuARodada: {fileID: 8300000, guid: 4da169f3d15c6d24cb699b520e9d9845, type: 3}
+  pontoDeVida: {fileID: 8300000, guid: 8fe9544fe2e713a4cafe2fb82e579603, type: 3}
+  pontosDeVida: {fileID: 8300000, guid: b54e39c55e295004dbc4bbe9a57b1c6f, type: 3}
+  rodada: {fileID: 8300000, guid: 676705cdc30f08e4ba2f0a0c3bf65fae, type: 3}
+  seuAdvNovaRodada: {fileID: 8300000, guid: 6d6112dad2822334fbadf0be0868ee8f, type: 3}
+  seuAdvTem: {fileID: 8300000, guid: 3f072d0dda97a854b8a9f7b1da54c125, type: 3}
+  seuInimEncerrouTurno: {fileID: 8300000, guid: ec6a63d2ff21db94f8f55056d57d6aa5,
+    type: 3}
+  seuTurnoAcabou: {fileID: 8300000, guid: 3b629f4050680274d87855dc01605cb9, type: 3}
+  tentarNovamente: {fileID: 8300000, guid: 7606ecd7718b6794dac4d4432d102509, type: 3}
+  voce: {fileID: 8300000, guid: f16fb87c0a49ae5469bbdf6eb10cad10, type: 3}
+  voceAcertou: {fileID: 8300000, guid: 0945af043c432114cab2cd725426aab3, type: 3}
+  voceTem: {fileID: 8300000, guid: b7fd9ac027caad44faa823d904704005, type: 3}
+  voltarPMenu: {fileID: 8300000, guid: 1c3f3613161569a4188bf86437ee21e3, type: 3}

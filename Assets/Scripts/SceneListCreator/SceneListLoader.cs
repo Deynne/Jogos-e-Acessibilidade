@@ -10,7 +10,6 @@ public class SceneListLoader : MonoBehaviour
     public static SceneDataList LoadSceneList() {
         string path = Application.streamingAssetsPath + "/" + SceneListWriter.jsonName;
         string json = null;
-        Debug.Log(path);
         if (Application.platform == RuntimePlatform.Android || true) {
             UnityWebRequest reader = UnityWebRequest.Get(path);
             
@@ -18,19 +17,11 @@ public class SceneListLoader : MonoBehaviour
 
             while (!reader.isDone) {
                 if (reader.isNetworkError || reader.isHttpError) {
-                    Debug.Log("net" + reader.isNetworkError);
-                    Debug.Log("http" + reader.isHttpError);
                     break;
                 }
              }
-            Debug.Log(reader.downloadHandler);
             if(!(reader.isNetworkError && reader.isHttpError)) {
-                Debug.Log("Entrou no jsonReader");
                 json = reader.downloadHandler.text;
-            }
-            else {
-                Debug.Log("net" + reader.isNetworkError);
-                Debug.Log("http" + reader.isHttpError);
             }
         }
         else{
