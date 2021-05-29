@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public enum Move {UP, DOWN, LEFT, RIGHT}
+public enum Move {CIMA, BAIXO, ESQUERDA, DIREITA}
 public class Fighter {
     #pragma warning disable CS0649
     public bool player;
@@ -94,16 +94,16 @@ public class FightManager : MonoBehaviour
         string s = "";
         switch (newMove)
         {
-            case Move.UP:
+            case Move.CIMA:
                 s = "punch_up";
                 break;
-            case Move.DOWN:
+            case Move.BAIXO:
                 s = "punch_left";
                 break;
-            case Move.LEFT:
+            case Move.ESQUERDA:
                 s = "block";
                 break;
-            case Move.RIGHT:
+            case Move.DIREITA:
                 s = "punch_right";
                 break;
         }

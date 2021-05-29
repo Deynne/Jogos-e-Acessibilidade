@@ -87,13 +87,13 @@ public class SwipeDetector : MonoBehaviour
 
                     //CHAMAR AQUI COMANDOS PARA SWIPE ESQUERDO
                     //Debug.LogWarning("ESQUERDA");
-                    StartCoroutine(fightManagerScript.PerformMove(Move.LEFT));
+                    StartCoroutine(fightManagerScript.PerformMove(Move.ESQUERDA));
 
                 } else if(difX > swipeOffset) {
 
                     //CHAMAR AQUI COMANDOS PARA SWIPE DIREITO
                     //Debug.LogWarning("DIREITA");
-                    StartCoroutine(fightManagerScript.PerformMove(Move.RIGHT));
+                    StartCoroutine(fightManagerScript.PerformMove(Move.DIREITA));
                 }
             } else {
                 //Aqui checa-se se difY é positivo ou negativo
@@ -101,12 +101,12 @@ public class SwipeDetector : MonoBehaviour
 
                     //CHAMAR AQUI COMANDOS PARA SWIPE PARA BAIXO
                     //Debug.LogWarning("BAIXO");
-                    StartCoroutine(fightManagerScript.PerformMove(Move.DOWN));
+                    StartCoroutine(fightManagerScript.PerformMove(Move.BAIXO));
 
                 } else if(difY > swipeOffset) {
                     //CHAMAR AQUI COMANDOS PARA SWIPE PARA CIMA
                     //Debug.LogWarning("CIMA");
-                    StartCoroutine(fightManagerScript.PerformMove(Move.UP));
+                    StartCoroutine(fightManagerScript.PerformMove(Move.CIMA));
                 }
             }
         }
