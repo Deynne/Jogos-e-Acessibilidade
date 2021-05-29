@@ -14,7 +14,7 @@ public class VolumeController : MonoBehaviour
         right
     };
     private void OnEnable() {
-        Slider s = GetComponent(typeof(Slider)) as Slider;
+        Slider s = this.gameObject.GetComponent(typeof(Slider)) as Slider;
         if(side == volumeSide.left) {
             float f = PlayerPrefs.GetFloat("leftVolume",1);
             s.value = f;
