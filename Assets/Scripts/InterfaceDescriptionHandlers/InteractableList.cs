@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 // Lida com as interações com a aplicação.
 // Identifica quais são os elementos interativos e quais podem ou não ser focados/ acompanham descrição
 // auditiva.
@@ -16,11 +16,20 @@ public class InteractableList  : MonoBehaviour {
 
     public int currentIndex {get => _currentIndex;}
 
+    private bool showInterface;
+
     // Retorna o objeto atualmente focado
     public GameObject focusedGo {get {
                                         if(_map.interactables.Count == 0){
                                             Debug.LogWarning("Não há elementos na lista de interativos. Você marcou os elementos interativos com a tag interactables?");
                                             return null;
+                                        }
+                                        Component[] c = _map.interactables[_currentIndex].GetComponentsInChildren(typeof(Image));
+                                        if(c != null && c.Length != 0) {
+                                            for(int i = 0; i < c.Length; i++) {
+                                                if(this.showInterface && c[i].gameObject != _map.interactables[_currentIndex] && (PlayerPrefs.GetInt("showInterface",1) == 1))
+                                                    ((Image) c[i]).enabled = true;
+                                            }
                                         }
                                         return _map.interactables[_currentIndex];}
                                     }
@@ -39,9 +48,16 @@ public class InteractableList  : MonoBehaviour {
             Debug.LogWarning("Não há elementos na lista de interativos. Você marcou os elementos interativos com a tag interactables?");
             return null;
         }
+        Component[] c = _map.interactables[_currentIndex].GetComponentsInChildren(typeof(Image));
+        if(c != null && c.Length != 0) {
+            for(int i = 0; i < c.Length; i++) {
+                if(this.showInterface && c[i].gameObject != _map.interactables[_currentIndex])
+                    ((Image) c[i]).enabled = false;
+            }
+        }
         _currentIndex = ++_currentIndex % _map.interactables.Count;
 
-        return _map.interactables[_currentIndex];
+        return this.focusedGo;
     }
 
     // Movimenta-se para o elemento na lista. Caso se encontre no primeiro elemento, move-se para o ultimo
@@ -50,9 +66,16 @@ public class InteractableList  : MonoBehaviour {
             Debug.LogWarning("Não há elementos na lista de interativos. Você marcou os elementos interativos com a tag interactables?");
             return null;
         }
+        Component[] c = _map.interactables[_currentIndex].GetComponentsInChildren(typeof(Image));
+        if(c != null && c.Length != 0) {
+            for(int i = 0; i < c.Length; i++) {
+                if(this.showInterface && c[i].gameObject != _map.interactables[_currentIndex])
+                    ((Image) c[i]).enabled = false;
+            }
+        }
         _currentIndex = --_currentIndex < 0?_map.interactables.Count-1:_currentIndex;
 
-        return _map.interactables[_currentIndex];
+        return this.focusedGo;
     }
 
     // Retorna um elemento específico da lista
@@ -66,10 +89,16 @@ public class InteractableList  : MonoBehaviour {
         if(index < 0 || index > _map.interactables.Count) {
             throw new IndexOutOfRangeException("Não há elementos em " + typeof(InteractableList) + " correspondendo ao índice " + index + ".");
         }
-        
+        Component[] c = _map.interactables[_currentIndex].GetComponentsInChildren(typeof(Image));
+        if(c != null && c.Length != 0) {
+            for(int i = 0; i < c.Length; i++) {
+                if(this.showInterface && c[i].gameObject != _map.interactables[_currentIndex])
+                    ((Image) c[i]).enabled = false;
+            }
+        }
         _currentIndex = index;
 
-        return _map.interactables[_currentIndex];
+        return this.focusedGo;
     }
 
     // Busca no objeto ou seus filhos qual deles é um objeto interativo.
@@ -113,6 +142,15 @@ public class InteractableList  : MonoBehaviour {
 
     // Utilizado em mudanças de tela.
     public void UpdateMap(Map newInteractablesList) {
+        if(_map != null){
+            Component[] c = _map.interactables[_currentIndex].GetComponentsInChildren(typeof(Image));
+            if(c != null && c.Length != 0) {
+                for(int i = 0; i < c.Length; i++) {
+                    if(this.showInterface && c[i].gameObject != _map.interactables[_currentIndex])
+                        ((Image) c[i]).enabled = false;
+                }
+            }
+        }
         _map = newInteractablesList;
         _currentIndex = 0;
     }
@@ -131,5 +169,9 @@ public class InteractableList  : MonoBehaviour {
         
         tempMap.interactables = temp;
         _map = tempMap;
+    }
+
+    void Start() {
+        this.showInterface = (PlayerPrefs.GetInt("showInterface",1) == 1);
     }
 }

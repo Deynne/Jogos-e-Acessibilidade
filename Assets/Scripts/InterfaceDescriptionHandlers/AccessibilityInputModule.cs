@@ -411,6 +411,7 @@ namespace UnityEngine.EventSystems
             // PointerDown notification
             if (pressed)
             {
+                holding = true;
                 pointerEvent.eligibleForClick = true;
                 pointerEvent.delta = Vector2.zero;
                 pointerEvent.dragging = false;
@@ -479,6 +480,7 @@ namespace UnityEngine.EventSystems
                     ExecuteEvents.Execute(pointerEvent.pointerDrag, pointerEvent, ExecuteEvents.initializePotentialDrag);
 
                 m_InputPointerEvent = pointerEvent;
+                this.lastPressedTime = Time.unscaledTime;
             }
 
             // PointerUp notification
@@ -535,7 +537,7 @@ namespace UnityEngine.EventSystems
                 // send exit events as we need to simulate this on touch up on touch device
                 ExecuteEvents.ExecuteHierarchy(pointerEvent.pointerEnter, pointerEvent, ExecuteEvents.pointerExitHandler);
                 pointerEvent.pointerEnter = null;
-
+                holding = false;
                 // m_InputPointerEvent = pointerEvent;
             }
         }
@@ -800,6 +802,7 @@ namespace UnityEngine.EventSystems
         // A ideia é que a interação possa ser feita movendo o mouse enquanto clica/toca na tela e move
         // o dedo. Interação mais fluida.
         protected override void ProcessMove(PointerEventData pointerEvent) {
+            
             float time = Time.unscaledTime;
             float diff = time - lastPressedTime;
                 if(holding && !dragging && diff > 0.5f && pointerEvent.clickCount < 2) {

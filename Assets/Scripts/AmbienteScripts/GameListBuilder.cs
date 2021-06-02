@@ -15,12 +15,23 @@ public class GameListBuilder : MonoBehaviour
     private Map map;
     [SerializeField]
     private GameObject parent;
+
+    [SerializeField]
+    private UIViewControl viewControl;
     #pragma warning restore CS0649
     // Start is called before the first frame update
     void Start()
     {
         sceneDataList = SceneListLoader.LoadSceneList();
         GameObject temp = map.interactables[0];
+
+        Component[] c = temp.GetComponentsInChildren(typeof(Image));
+        if(c != null && c.Length != 0) {
+            for(int i = 0; i < c.Length; i++) {
+                if(c[i].gameObject != temp)
+                    ((Image) c[i]).enabled = false;
+            }
+        }
         map.interactables.RemoveAt(0);
         for(int i = 0; i <sceneDataList.list.Count;i++) 
             map.interactables.Add(CreateButton(sceneDataList.list[i],new Vector3(0,-10*(i+1),0)).gameObject);
@@ -34,6 +45,7 @@ public class GameListBuilder : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(interactableList.focusedGo);
         DescriptionPlayer dp = interactableList.focusedGo.GetComponent(typeof(DescriptionPlayer)) as DescriptionPlayer;
         dp.OnDescriptorPress(null);
+        viewControl.CheckGraphics();
     }
 
     private Button CreateButton(SceneData sceneData, Vector3 position) {
@@ -52,6 +64,7 @@ public class GameListBuilder : MonoBehaviour
                                         c.LoadGame(sceneData.scenePath);
                                     });
         
+        Debug.Log(b);
         return b;
         
     }

@@ -13,7 +13,8 @@ public class UIViewControl : MonoBehaviour
             if(graphics != null) {
                 foreach (var graphic in graphics)
                 {
-                    ((Graphic) graphic).enabled = false;    
+                    if(!graphic.CompareTag("Pointer"))
+                        ((Graphic) graphic).enabled = false;    
                 }
                 
             }
@@ -23,7 +24,8 @@ public class UIViewControl : MonoBehaviour
             if(graphics != null) {
                 foreach (var graphic in graphics)
                 {
-                    ((Renderer) graphic).enabled = false;    
+                    if(!graphic.CompareTag("Pointer"))
+                        ((Renderer) graphic).enabled = false;    
                 }
                 
             }
@@ -42,13 +44,15 @@ public class UIViewControl : MonoBehaviour
         if(graphics != null) {
             if(!(PlayerPrefs.GetInt("showInterface",1) == 1)) {
                 foreach (var graphic in graphics) {
-                    ((Graphic) graphic).enabled = false;    
+                    if(!graphic.CompareTag("Pointer"))
+                        ((Graphic) graphic).enabled = false;    
                 }
                     
             }
             else {
                 foreach (var graphic in graphics) {
-                    ((Graphic) graphic).enabled = true;    
+                    if(!graphic.CompareTag("Pointer"))
+                        ((Graphic) graphic).enabled = true;    
                 }
             }
         }
@@ -58,13 +62,15 @@ public class UIViewControl : MonoBehaviour
         if(graphics != null) {
             if(!(PlayerPrefs.GetInt("showInterface",1) == 1)) {
                 foreach (var graphic in graphics) {
-                    ((Renderer) graphic).enabled = false;    
+                    if(!graphic.CompareTag("Pointer"))
+                        ((Renderer) graphic).enabled = false;    
                 }
                     
             }
             else {
                 foreach (var graphic in graphics) {
-                    ((Renderer) graphic).enabled = true;    
+                    if(!graphic.CompareTag("Pointer"))
+                        ((Renderer) graphic).enabled = true;    
                 }
             }
         }
